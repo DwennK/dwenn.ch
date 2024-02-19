@@ -25,11 +25,11 @@ export const HeroSection = () => {
       </p>
       <div className="mt-4 mb-4">
         {" "}
-        <Button className="mr-4">
+        <Button className="mr-4 mt-2">
           <Contact className="mr-2 h-4 w-4" />
           Hire me
         </Button>
-        <Button variant="outline" className="mr-4">
+        <Button variant="outline" className="mr-4 mt-2">
           <Download className="mr-2 h-4 w-4" />
           Download CV
         </Button>
