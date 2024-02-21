@@ -13,7 +13,7 @@ export const HeroSection = () => {
       {" "}
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-600">
-          Hello, I'm {""}
+          Hello, I&apos;m {""}
           <br />
         </span>
         <TypeAnimation
