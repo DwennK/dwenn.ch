@@ -1,16 +1,37 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import { Contact } from "lucide-react";
+import { TypeAnimation } from "react-type-animation";
 
 export const HeroSection = () => {
   return (
     <section>
       {" "}
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-        Hello, I am Dwenn
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-600">
+          Hello, I'm {""}
+          <br />
+        </span>
+        <TypeAnimation
+          sequence={[
+            // Same substring at the start will only be typed out once, initially
+            "Dwenn",
+            1000, // wait 1s before replacing "Mice" with "Hamsters"
+            "a Web Developper",
+            1000,
+            "a Mobile Developper",
+            1000,
+            "a UI/UX Designer",
+            1000,
+          ]}
+          wrapper="span"
+          speed={50}
+          repeat={Infinity}
+        />
       </h1>
       <p className="leading-7 [&:not(:first-child)]:mt-6">
         I established{" "}
@@ -23,6 +44,11 @@ export const HeroSection = () => {
         with the aim of empowering small businesses to enhance their online
         presence.
       </p>
+      <div>
+        <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+          h22222222222
+        </h2>
+      </div>
       <div className="mt-4 mb-4">
         {" "}
         <Button className="mr-4 mt-2">
