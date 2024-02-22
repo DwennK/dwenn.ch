@@ -28,6 +28,8 @@ export const HeroSection = () => {
               1000,
               "a UI/UX Designer",
               1000,
+              "a C# Developper",
+              1000,
             ]}
             wrapper="span"
             style={{ display: "inline-block" }}
