@@ -11,27 +11,30 @@ export const HeroSection = () => {
   return (
     <section>
       {" "}
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl  h-[3em] md:h-[2em]">
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-600">
           Hello, I&apos;m {""}
           <br />
         </span>
-        <TypeAnimation
-          sequence={[
-            // Same substring at the start will only be typed out once, initially
-            "Dwenn",
-            1000, // wait 1s before replacing "Mice" with "Hamsters"
-            "a Web Developper",
-            1000,
-            "a Mobile Developper",
-            1000,
-            "a UI/UX Designer",
-            1000,
-          ]}
-          wrapper="span"
-          speed={50}
-          repeat={Infinity}
-        />
+        <span className="">
+          <TypeAnimation
+            sequence={[
+              // Same substring at the start will only be typed out once, initially
+              "Dwenn",
+              1000, // wait 1s before replacing "Mice" with "Hamsters"
+              "a Web Developper",
+              1000,
+              "a Mobile Developper",
+              1000,
+              "a UI/UX Designer",
+              1000,
+            ]}
+            wrapper="span"
+            style={{ display: "inline-block" }}
+            speed={50}
+            repeat={Infinity}
+          />
+        </span>
       </h1>
       <p className="leading-7 [&:not(:first-child)]:mt-6">
         I established{" "}
