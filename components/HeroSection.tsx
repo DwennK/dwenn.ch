@@ -11,7 +11,7 @@ export const HeroSection = () => {
   return (
     <section>
       {" "}
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl  h-[3em] md:h-[2em]">
+      <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-7xl h-[3em] md:h-[2em]">
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-600">
           Hello, I&apos;m {""}
           <br />
