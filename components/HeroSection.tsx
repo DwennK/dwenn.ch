@@ -38,7 +38,7 @@ export const HeroSection = () => {
           />
         </span>
       </h1>
-      <p className="leading-7 [&:not(:first-child)]:mt-6">
+      <h2 className="leading-7 [&:not(:first-child)]:mt-6">
         I established{" "}
         <Link
           className="font-bold hover:text-blue-600"
@@ -48,13 +48,9 @@ export const HeroSection = () => {
         </Link>{" "}
         with the aim of empowering small businesses to enhance their online
         presence.
-      </p>
-      <div>
-        <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-          h22222222222
-        </h2>
-      </div>
-      <div className="mt-4 mb-4">
+      </h2>
+      <div></div>
+      <div className="mt-4 mb-4 ">
         {" "}
         <Button className="mr-4 mt-2">
           <Contact className="mr-2 h-4 w-4" />
