@@ -17,7 +17,7 @@ const AboutSection = () => {
         <div>
           <h2 className="text-4xl font-bold mb-4">About me</h2>
           <p className="text-base lg:text-lg">
-            I'm a full stack web developper with a passsion for creating
+            I&apos;m a full stack web developper with a passsion for creating
             interactive and responsive web applications. I have experiences with
             JavaScript, React, Node.js, Next.js, PostgreSQl, C#, HTMl, CSS and
             Git. I am a quick learner and I an always looking to expand my
