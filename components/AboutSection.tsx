@@ -24,7 +24,7 @@ const AboutSection = () => {
             knowledge and my skill set. I am a team player and I am excited to
             work with others to create amazing applications.
           </p>
-          <Tabs defaultValue="account" className="w-[400px] mt-2">
+          <Tabs defaultValue="education" className="w-[400px] mt-2">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="skills">Skills</TabsTrigger>
               <TabsTrigger value="education">Education</TabsTrigger>
