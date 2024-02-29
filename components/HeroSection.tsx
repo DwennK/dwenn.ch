@@ -58,7 +58,7 @@ export const HeroSection = () => {
         </Button>
         <Button variant="outline" className="mr-4 mt-2">
           <Download className="mr-2 h-4 w-4" />
-          Download CV
+          See my CV
         </Button>
       </div>
       <div className="col-span-5 mt-4 mb-4">
