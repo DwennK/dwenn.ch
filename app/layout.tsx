@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Dwenn.ch | Portfolio",
   description:
-    "Explore a showcase of my passion for data science, programming, and retro games. Dive into a world where creativity meets technology, and experience the journey of a data scientist born in 1994, based in Switzerland. Welcome to my digital playground!",
+    "Explore a showcase of my passion for data science and programming. Dive into a world where creativity meets technology, and experience the journey of a data scientist based in Switzerland. Welcome to my digital playground!",
 };
 
 export default function RootLayout({
