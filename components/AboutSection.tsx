@@ -19,7 +19,7 @@ const AboutSection = () => {
           <p className="text-base lg:text-lg">
             I&apos;m a full stack web developper with a passsion for creating
             interactive and responsive web applications. I have experiences with
-            JavaScript, React, Node.js, Next.js, PostgreSQl, C#, HTMl, CSS and
+            JavaScript, React, Node.js, Next.js, PostgreSQL, C#, HTMl, CSS and
             Git. I am a quick learner and I an always looking to expand my
             knowledge and my skill set. I am a team player and I am excited to
             work with others to create amazing applications.
