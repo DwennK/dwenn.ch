@@ -1,0 +1,241 @@
+:root{
+  --bg:#f7f0ee;
+  --ink:#0a0a0a;
+  --muted:#5d5551;
+  --line:rgba(10,10,10,.13);
+  --orange:#ff5a36;
+  --purple:#8c35ff;
+  --pink:#ff70be;
+  --acid:#dfff2f;
+  --card:#fffaf8;
+  --radius:34px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 76% 8%, rgba(255,90,54,.15), transparent 30vw),
+    radial-gradient(circle at 4% 44%, rgba(140,53,255,.11), transparent 28vw),
+    var(--bg);
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:50;
+  opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.75'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+}
+
+a{color:inherit;text-decoration:none}
+button,input,textarea{font:inherit}
+
+.page{
+  min-height:100vh;
+  padding:24px;
+}
+
+.shell{
+  max-width:1380px;
+  margin:0 auto;
+  min-height:calc(100vh - 48px);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:linear-gradient(145deg, rgba(255,255,255,.67), rgba(255,246,243,.76));
+  box-shadow:0 24px 90px rgba(30,10,0,.12);
+  overflow:hidden;
+  position:relative;
+}
+
+.nav{
+  height:86px;
+  padding:0 34px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:relative;
+  z-index:20;
+}
+
+.logo{
+  font-weight:950;
+  letter-spacing:-.07em;
+  font-size:24px;
+  line-height:1;
+}
+
+.logo span{color:var(--orange)}
+
+.nav-links{
+  display:flex;
+  gap:34px;
+  align-items:center;
+  font-size:13px;
+  font-weight:750;
+  letter-spacing:-.02em;
+}
+
+.nav-links a{
+  opacity:.72;
+  transition:.25s var(--ease);
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+  opacity:1;
+  transform:translateY(-2px);
+}
+
+.menu-btn{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:850;
+  text-transform:uppercase;
+  letter-spacing:-.03em;
+}
+
+.menu-circle{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(0,0,0,.2);
+  border-radius:999px;
+  transition:.25s var(--ease);
+}
+
+.menu-btn:hover .menu-circle{
+  transform:rotate(90deg);
+  background:#111;
+  color:#fff;
+}
+
+.dots{
+  width:15px;
+  height:15px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:3px;
+}
+
+.dots i{
+  width:4px;
+  height:4px;
+  background:currentColor;
+  border-radius:50%;
+}
+
+footer{
+  padding:28px 58px 42px;
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity .8s var(--ease), transform .8s var(--ease);
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+.menu-overlay{
+  position:fixed;
+  inset:24px;
+  background:#080808;
+  color:#fff;
+  z-index:100;
+  border-radius:34px;
+  transform:translateY(-110%);
+  transition:.65s var(--ease);
+  padding:36px;
+  display:grid;
+  grid-template-rows:auto 1fr;
+}
+
+.menu-overlay.open{transform:none}
+
+.menu-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.close{
+  color:white;
+  background:transparent;
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:999px;
+  width:54px;
+  height:54px;
+  cursor:pointer;
+  font-size:26px;
+}
+
+.menu-big{
+  display:grid;
+  align-content:center;
+  gap:12px;
+}
+
+.menu-big a{
+  font-size:clamp(56px,9vw,128px);
+  line-height:.9;
+  letter-spacing:-.08em;
+  font-weight:950;
+  transition:.25s var(--ease);
+}
+
+.menu-big a:hover{
+  color:var(--orange);
+  transform:translateX(18px);
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+@media (max-width:980px){
+  .page{padding:10px}
+  .shell,
+  .menu-overlay{border-radius:24px}
+  .nav{
+    height:72px;
+    padding:0 20px;
+  }
+  .nav-links{display:none}
+  footer{
+    display:block;
+    padding:24px;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
+}
