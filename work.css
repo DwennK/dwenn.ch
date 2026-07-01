@@ -246,128 +246,27 @@ h1 .dot{color:var(--orange)}
 }
 
 .mockup{
+  --mockup-image:none;
   position:absolute;
   inset:0;
   transform:scale(1.02);
   transition:.8s var(--ease);
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.12)),
+    var(--mockup-image) center/cover no-repeat,
+    #080808;
 }
 
 .project:hover .mockup{
   transform:scale(1.08) rotate(.6deg);
 }
 
-.mockup.peaks{
-  background:
-    linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.6)),
-    radial-gradient(circle at 50% 25%, rgba(255,255,255,.9), transparent 5%),
-    linear-gradient(140deg, #13161c 0%, #2d333c 32%, #070707 70%);
-}
-
-.mockup.peaks::before{
-  content:"";
-  position:absolute;
-  left:5%;
-  right:5%;
-  bottom:-8%;
-  height:60%;
-  background:
-    linear-gradient(135deg, transparent 28%, rgba(255,255,255,.8) 29% 30%, transparent 31%),
-    linear-gradient(40deg, transparent 34%, rgba(255,255,255,.22) 35% 36%, transparent 37%),
-    linear-gradient(150deg, transparent 42%, rgba(255,255,255,.36) 43% 44%, transparent 45%);
-  clip-path:polygon(0 100%, 18% 48%, 30% 72%, 48% 20%, 68% 84%, 82% 38%, 100% 100%);
-  opacity:.92;
-}
-
-.mockup.mutatis{
-  background:
-    radial-gradient(circle at 68% 38%, rgba(228,211,179,.75), transparent 16%),
-    radial-gradient(circle at 30% 25%, rgba(31,42,68,.9), transparent 28%),
-    linear-gradient(135deg, #1f2a44, #0d1220 58%, #e4d3b3);
-}
-
-.mockup.mutatis::before{
-  content:"MUTATIS";
-  position:absolute;
-  left:34px;
-  top:36px;
-  color:#e4d3b3;
-  font-family:Georgia, serif;
-  font-size:52px;
-  letter-spacing:-.08em;
-}
-
-.mockup.melicello{
-  background:
-    radial-gradient(circle at 35% 46%, #f4d43a, transparent 10%),
-    radial-gradient(circle at 65% 55%, rgba(255,255,255,.9), transparent 15%),
-    linear-gradient(135deg, #080808, #111 55%, #f4d43a 56% 58%, #080808 59%);
-}
-
-.mockup.melicello::before{
-  content:"Melicello";
-  position:absolute;
-  right:34px;
-  bottom:34px;
-  color:white;
-  font-family:Georgia, serif;
-  font-size:52px;
-  font-style:italic;
-}
-
-.mockup.geneva{
-  background:
-    radial-gradient(circle at 54% 44%, rgba(255,255,255,.9), transparent 9%),
-    radial-gradient(circle at 50% 45%, transparent 0 22%, rgba(255,255,255,.7) 23% 24%, transparent 25%),
-    linear-gradient(145deg, #101010, #2b2b2b 48%, #eee 49%, #f8f8f8);
-}
-
-.mockup.geneva::before{
-  content:"GENEVA WRIST";
-  position:absolute;
-  left:32px;
-  top:32px;
-  color:white;
-  font-weight:950;
-  font-size:38px;
-  letter-spacing:-.08em;
-}
-
-.mockup.booby{
-  background:
-    radial-gradient(circle at 70% 32%, rgba(255,112,190,.9), transparent 18%),
-    radial-gradient(circle at 35% 68%, rgba(140,53,255,.9), transparent 22%),
-    linear-gradient(135deg, #050505, #121025 60%, #050505);
-}
-
-.mockup.booby::before{
-  content:"BOOBY NIGHT";
-  position:absolute;
-  left:30px;
-  bottom:30px;
-  color:white;
-  font-size:48px;
-  font-weight:950;
-  letter-spacing:-.08em;
-}
-
-.mockup.microwest{
-  background:
-    radial-gradient(circle at 68% 42%, #fff, transparent 9%),
-    linear-gradient(120deg, #e8f0ff, #fff 45%, #0a0a0a 46%, #0a0a0a);
-}
-
-.mockup.microwest::before{
-  content:"iPhone Repair";
-  position:absolute;
-  left:34px;
-  top:42px;
-  color:#0a0a0a;
-  font-size:52px;
-  line-height:.88;
-  font-weight:950;
-  letter-spacing:-.08em;
-  max-width:280px;
-}
+.mockup.peaks{--mockup-image:url("assets/cards/project-peaks.webp")}
+.mockup.mutatis{--mockup-image:url("assets/cards/project-mutatis.webp")}
+.mockup.melicello{--mockup-image:url("assets/cards/project-melicello.webp")}
+.mockup.geneva{--mockup-image:url("assets/cards/project-geneva.webp")}
+.mockup.booby{--mockup-image:url("assets/cards/project-booby.webp")}
+.mockup.microwest{--mockup-image:url("assets/cards/project-microwest.webp")}
 
 .project-body{
   padding:30px;
