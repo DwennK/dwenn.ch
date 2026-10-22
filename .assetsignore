@@ -3,3 +3,8 @@
 .assetsignore
 .DS_Store
 wrangler.toml
+worker.mjs
+test/
+output/
+.dev.vars*
+.wrangler/
