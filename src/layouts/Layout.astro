@@ -1,0 +1,66 @@
+---
+import '../styles/global.css';
+import '@fontsource-variable/archivo';
+
+import { type Lang, type PageKey, path, ui, profile } from '../content/site';
+interface Props { lang: Lang; page: PageKey; title: string; description: string; noFooter?: boolean }
+const { lang, page, title, description, noFooter = false } = Astro.props;
+const t = ui[lang];
+const opposite = lang === 'fr' ? 'en' : 'fr';
+const canonical = new URL(path(page, lang), Astro.site);
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#111214" />
+  <title>{title} — Dwenn Kaufmann</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <link rel="alternate" hreflang="fr" href={new URL(path(page, 'fr'), Astro.site)} />
+  <link rel="alternate" hreflang="en" href={new URL(path(page, 'en'), Astro.site)} />
+  <link rel="alternate" hreflang="x-default" href={new URL(path(page, 'fr'), Astro.site)} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={`${title} — Dwenn Kaufmann`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:locale" content={lang === 'fr' ? 'fr_CH' : 'en_GB'} />
+  <meta property="og:image" content={new URL('/images/projects/canapey.webp', Astro.site)} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json" set:html={JSON.stringify({ '@context':'https://schema.org', '@type':'Person', name:profile.name, url:'https://dwenn.ch', jobTitle:t.role, email:profile.email, sameAs:[profile.github,profile.linkedin], address:{'@type':'PostalAddress',addressLocality:'Neuchâtel',addressCountry:'CH'} })} />
+</head>
+<body>
+  <a class="skip-link" href="#main">{t.skip}</a>
+  <header class="site-header">
+    <a class="wordmark" href={path('home', lang)} aria-label={`Dwenn Kaufmann — ${t.home}`}><span class="wordmark-symbol" aria-hidden="true">&lt;/&gt;</span><span>Dwenn Kaufmann</span></a>
+    <span class="header-role">{t.role}<br /><span>{t.location}</span></span>
+    <nav class="desktop-nav" aria-label={lang === 'fr' ? 'Navigation principale' : 'Main navigation'}>
+      <a href={path('work', lang)} aria-current={page === 'work' ? 'page' : undefined}>{t.work}</a>
+      <a href={path('about', lang)} aria-current={page === 'about' ? 'page' : undefined}>{t.about}</a>
+      <a href={path('contact', lang)} class="header-contact">Contact <span aria-hidden="true">↗</span></a>
+    </nav>
+    <a class="language-switch" href={path(page, opposite)} lang={opposite} aria-label={t.language}>{opposite.toUpperCase()}</a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-navigation" aria-label={t.menu} data-open-label={t.menu} data-close-label={t.close}><span></span><span></span></button>
+    <nav id="mobile-navigation" class="mobile-nav" aria-label={lang === 'fr' ? 'Navigation mobile' : 'Mobile navigation'} inert>
+      <a href={path('home',lang)}>{t.home}<span>00</span></a>
+      <a href={path('work',lang)}>{t.work}<span>01</span></a>
+      <a href={path('about',lang)}>{t.about}<span>02</span></a>
+      <a href={path('contact',lang)}>{lang === 'fr' ? 'Contact' : 'Let’s talk'}<span>↗</span></a>
+      <p>{t.role}<br />{t.location}</p>
+    </nav>
+  </header>
+  <main id="main"><slot /></main>
+  {!noFooter && <footer class="site-footer" id="contact">
+    <div class="footer-top"><span class="eyebrow">{lang === 'fr' ? 'CONTACT' : 'GET IN TOUCH'}</span><p>{t.footer}</p></div>
+    <a class="footer-invitation" href={path('contact',lang)}><span>{lang === 'fr' ? 'On en parle ?' : 'Let’s talk.'}</span><i aria-hidden="true">↗</i></a>
+    <div class="footer-bottom"><a href="mailto:hello@dwenn.ch">hello@dwenn.ch ↗</a><div><a href={profile.github}>GitHub ↗</a><a href={profile.linkedin}>LinkedIn ↗</a></div><span>© {new Date().getFullYear()} — {t.copyright}</span></div>
+  </footer>}
+  <script>
+    import { initSite } from '../scripts/site';
+    initSite();
+  </script>
+</body>
+</html>

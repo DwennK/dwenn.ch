@@ -1,0 +1,44 @@
+---
+import { type Lang, path, profile } from '../content/site';
+import { aboutContent, influences } from '../content/about';
+import Peaks from './Peaks.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = aboutContent[lang];
+---
+<div class="about-page">
+  <section class="about-header" aria-labelledby="about-title">
+    <div class="about-copy">
+      <p class="section-label">{c.label}</p>
+      <h1 id="about-title" aria-label={c.title}>{c.title.split(' ').map(word => <span>{word}</span>)}</h1>
+      <p class="about-role">{c.role}</p>
+      <p class="about-intro">{c.intro}</p>
+      <p class="about-approach">{c.approach}</p>
+      <div class="about-links"><a href={path('work',lang)}>{c.workCta}<span aria-hidden="true">↗</span></a><a href={path('contact',lang)}>{c.contactCta}<span aria-hidden="true">↗</span></a></div>
+    </div>
+    <img class="about-portrait" src={profile.portrait} width="709" height="945" alt={c.portraitAlt} fetchpriority="high" />
+  </section>
+
+  <section class="about-section story" aria-labelledby="story-title">
+    <h2 id="story-title">{c.storyTitle}</h2>
+    <div class="story-copy">{c.story.map(paragraph=><p>{paragraph}</p>)}
+      {profile.childhoodPhoto && <figure class="childhood"><img src={profile.childhoodPhoto} width="900" height="675" alt={c.childhoodAlt} loading="lazy" /><figcaption>{c.childhoodCaption}</figcaption></figure>}
+    </div>
+  </section>
+
+  <section class="about-section skills" aria-labelledby="skills-title">
+    <h2 id="skills-title">{c.skillsTitle}</h2>
+    <div class="skill-content"><dl>{c.skills.map(skill=><div class="skill-row"><dt>{skill.title}</dt><dd>{skill.text}</dd></div>)}</dl><p class="skill-history">{c.historyText}</p></div>
+  </section>
+
+  <section class="about-section games" aria-labelledby="games-title">
+    <h2 id="games-title">{c.playTitle}</h2>
+    <div class="games-content"><p>{c.playIntro}</p><div class="game-list">{influences.map(game=><figure class="game"><img src={game.image} width="1600" height="800" alt={game.alt[lang]} loading="lazy" decoding="async" /><figcaption><h3>{game.title[lang]}</h3><a href={game.source} target="_blank" rel="noreferrer">{c.sourceLabel}<span aria-hidden="true"> ↗</span><span class="sr-only"> ({c.externalLabel})</span></a><p>{game.credit[lang]}</p></figcaption></figure>)}</div></div>
+  </section>
+</div>
+<Peaks lang={lang} />
+<style>
+.about-page{max-width:1440px;margin:0 auto;padding:64px var(--gutter) 0}.about-header{display:grid;grid-template-columns:minmax(0,1fr) 34%;gap:7%;align-items:center;padding-bottom:72px}.section-label{font:12px/1.5 var(--mono,monospace);color:var(--muted);margin:0 0 26px;text-transform:none;letter-spacing:0}.about-header h1{font-size:clamp(70px,9.3vw,144px);letter-spacing:-.065em;line-height:.92;font-weight:650;margin:0 0 27px}.about-header h1>span{display:block}.about-role{font-size:clamp(17px,1.5vw,22px);line-height:1.5;color:var(--ink);margin-bottom:30px}.about-intro{font-size:19px;line-height:1.65;max-width:640px}.about-approach{font-size:16px;line-height:1.75;max-width:600px;margin-top:16px;color:var(--muted)}.about-portrait{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;align-self:start;margin-top:47px;filter:saturate(.8)}.about-links{display:flex;flex-wrap:wrap;gap:32px;margin-top:27px}.about-links a{display:inline-flex;align-items:center;gap:22px;font-size:14px;line-height:1.6;border-bottom:1px solid var(--line);padding:8px 0}.about-links a:hover{border-color:var(--ink)}.about-links a>span{font-size:21px}.about-section{display:grid;grid-template-columns:28% minmax(0,1fr);gap:7%;border-top:1px solid var(--line);padding:48px 0 56px}.about-section>h2{font-size:clamp(27px,3vw,43px);line-height:1.15;letter-spacing:-.04em;font-weight:600;max-width:320px}.story-copy{max-width:750px}.story-copy p{font-size:18px;line-height:1.8}.story-copy p:first-child{font-size:22px;line-height:1.6}.story-copy p+p{margin-top:20px}.childhood{margin-top:28px;max-width:450px}.childhood img{width:100%;height:auto}.childhood figcaption{font-size:12px;color:var(--muted);margin-top:10px}.skill-content dl{margin:0}.skill-row{display:grid;grid-template-columns:35% minmax(0,1fr);gap:24px;padding:0 0 25px}.skill-row+.skill-row{border-top:1px solid var(--line);padding-top:25px}.skill-row dt{font-size:21px;line-height:1.4;letter-spacing:-.025em;color:var(--ink)}.skill-row dd{margin:0;font-size:16px;line-height:1.7;color:var(--muted)}.skill-history{font-size:14px;line-height:1.8;color:var(--muted);border-top:1px solid var(--line);padding-top:25px}.games{grid-template-columns:28% minmax(0,1fr);padding-bottom:70px}.games-content{display:contents}.games-content>p{font-size:17px;line-height:1.75;max-width:580px;align-self:end}.game-list{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;margin-top:4px}.game img{width:100%;height:auto;aspect-ratio:2/1;object-fit:contain}.game h3{font-size:22px;line-height:1.35;letter-spacing:-.03em;font-weight:550;margin:17px 0 10px}.game figcaption>a{font-size:10px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;line-height:1.5;display:inline-block}.game figcaption>p{font-size:10px;line-height:1.7;color:var(--muted);margin-top:7px;max-width:330px}.sr-only{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:1000px){.about-header{grid-template-columns:minmax(0,1fr) 34%;gap:5%}.about-header h1{font-size:9.4vw}.about-section{grid-template-columns:26% minmax(0,1fr);gap:6%}.skill-row{grid-template-columns:35% minmax(0,1fr);gap:18px}.skill-row dt{font-size:18px}.game-list{gap:18px}}
+@media(max-width:700px){.about-page{padding-top:37px}.about-header{display:flex;flex-direction:column;gap:0;padding-bottom:40px;align-items:stretch}.about-copy{display:contents}.section-label{order:0;margin:0 0 23px}.about-header h1{order:1;font-size:18vw;line-height:.94;letter-spacing:-.06em;margin:0 0 19px}.about-role{order:2;font-size:15px;line-height:1.6;margin:0 0 27px;max-width:300px}.about-portrait{order:3;width:100%;aspect-ratio:1.2;object-position:50% 30%;margin:0 0 27px}.about-intro{order:4;font-size:17px;line-height:1.7;margin:0}.about-approach{order:5;font-size:14px;line-height:1.8;margin-top:15px}.about-links{order:6;margin-top:21px;gap:28px}.about-links a{font-size:13px}.about-section{display:block;padding:30px 0 37px}.about-section>h2{font-size:30px;margin-bottom:26px;max-width:300px}.story-copy p{font-size:15px;line-height:1.8}.story-copy p:first-child{font-size:18px;line-height:1.65}.story-copy p+p{margin-top:18px}.skill-row{grid-template-columns:1fr;gap:8px;padding-bottom:22px}.skill-row+.skill-row{padding-top:22px}.skill-row dt{font-size:20px;line-height:1.4}.skill-row dd{font-size:15px;line-height:1.7}.skill-history{font-size:13px;padding-top:22px}.games-content{display:block}.games-content>p{font-size:15px;margin-bottom:26px}.game-list{grid-template-columns:1fr;gap:28px}.game{display:grid;grid-template-columns:44% minmax(0,1fr);gap:19px;align-items:start}.game h3{margin:0 0 8px;font-size:18px}.game figcaption>a{font-size:10px}.game figcaption>p{font-size:9px;margin-top:6px}.games{padding-bottom:40px}}
+</style>

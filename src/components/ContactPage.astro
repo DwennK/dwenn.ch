@@ -1,0 +1,84 @@
+---
+import ContactForm from './ContactForm.astro';
+import { type Lang, profile } from '../content/site';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+---
+
+<section class="contact-page" aria-labelledby="contact-title">
+  <div class="page-kicker eyebrow"><span>03 / CONTACT</span><span>{fr ? 'DWENN KAUFMANN — DÉVELOPPEUR FULL STACK' : 'DWENN KAUFMANN — FULL STACK DEVELOPER'}</span></div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h1 id="contact-title" class:list={{ 'contact-title-en': !fr }}>{fr ? <><span>Parlons</span><span>de votre</span><span>projet.</span></> : <><span>Tell me</span><span>what you’re</span><span>building.</span></>}</h1>
+      <p class="contact-intro">{fr ? 'Application métier, logiciel desktop, intégration ou site web : dites-moi ce que vous voulez construire et le problème à résoudre.' : 'A business application, desktop software, an integration or a website: tell me what you want to build and the problem it needs to solve.'}</p>
+      <div class="contact-coordinates">
+        <a class="contact-email" href={`mailto:${profile.email}`}>{profile.email}<span aria-hidden="true">↗</span></a>
+        <div class="contact-details"><span>{fr ? 'Neuchâtel, Suisse' : 'Neuchâtel, Switzerland'}</span><div><a href={profile.github}>GitHub <span aria-hidden="true">↗</span></a><a href={profile.linkedin}>LinkedIn <span aria-hidden="true">↗</span></a></div></div>
+      </div>
+      <aside class="contact-peaks" aria-labelledby="contact-peaks-title">
+        <div class="contact-peaks-top"><h2 id="contact-peaks-title">{fr ? 'Un site pour votre entreprise ?' : 'A website for your business?'}</h2><span class="contact-peaks-name">Peaks</span></div>
+        <p>{fr ? 'Fondateur de Peaks, j’aide aussi les petites entreprises à construire leur présence sur le web.' : 'As the founder of Peaks, I also help small businesses build their presence on the web.'}</p>
+        <a href="https://peaks.ch">{fr ? 'Découvrir Peaks' : 'Explore Peaks'}<span aria-hidden="true">↗</span></a>
+      </aside>
+    </div>
+    <div class="contact-form-panel">
+      <div class="contact-form-heading"><span class="eyebrow">{fr ? 'VOTRE MESSAGE' : 'YOUR MESSAGE'}</span><p>{fr ? 'Le contexte, les utilisateurs, les contraintes. Quelques lignes suffisent pour commencer.' : 'The context, the people using it, the constraints. A few lines are enough to get started.'}</p></div>
+      <ContactForm lang={lang} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-page { padding: 0 var(--gutter) 90px; }
+  .contact-page .page-kicker { margin-bottom: 52px; font-family: var(--mono, monospace); color: var(--muted); }
+  .contact-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(55px, 8vw, 135px); align-items: start; }
+  .contact-info { min-width: 0; }
+  .contact-info h1 { font-family: var(--sans); font-size: clamp(70px, 7.6vw, 132px); font-style: normal; font-weight: 750; line-height: .92; letter-spacing: -.065em; }
+  .contact-info h1 > span { display: block; }
+  .contact-info h1.contact-title-en { font-size: clamp(62px, 6.6vw, 116px); }
+  .contact-intro { max-width: 450px; margin-top: 35px; color: var(--muted); font-size: 16px; line-height: 1.65; }
+  .contact-coordinates { margin-top: 32px; }
+  .contact-email { display: flex; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--line); padding: 12px 0 17px; font-size: clamp(24px, 2.2vw, 38px); letter-spacing: -.04em; line-height: 1; }
+  .contact-email > span { font-size: 1.05em; transition: transform .2s; }
+  .contact-email:hover > span { transform: translate(4px, -4px); }
+  .contact-details { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 18px; font-family: var(--mono, monospace); font-size: 11px; color: var(--muted); }
+  .contact-details > div { display: flex; gap: 22px; color: var(--ink); }
+  .contact-details a { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 5px; transition: text-decoration-color .2s; }
+  .contact-details a:hover { text-decoration-color: currentColor; }
+  .contact-details a span { margin-left: 3px; }
+  .contact-peaks { border-top: 1px solid var(--line); margin-top: 38px; padding-top: 23px; }
+  .contact-peaks-top { display: flex; gap: 20px; justify-content: space-between; align-items: baseline; }
+  .contact-peaks h2 { font-size: 16px; font-weight: 550; line-height: 1.4; letter-spacing: -.025em; }
+  .contact-peaks-name { font-size: 15px; font-weight: 700; letter-spacing: -.05em; }
+  .contact-peaks p { max-width: 420px; margin-top: 10px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+  .contact-peaks > a { display: inline-flex; gap: 30px; align-items: center; margin-top: 16px; font-size: 12px; border-bottom: 1px solid var(--line); padding-bottom: 5px; }
+  .contact-peaks > a > span { font-size: 18px; }
+  .contact-form-panel { padding-top: 7px; min-width: 0; }
+  .contact-form-heading { margin-bottom: 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+  .contact-form-heading > .eyebrow { font-family: var(--mono, monospace); }
+  .contact-form-heading > p { max-width: 350px; margin-top: 20px; font-size: 15px; line-height: 1.65; color: var(--muted); }
+  @media (min-width: 801px) and (max-width: 1100px) { .contact-grid { gap: 42px; grid-template-columns: 1fr 1fr; } .contact-info h1 { font-size: 7.8vw; } .contact-info h1.contact-title-en { font-size: 6.6vw; } .contact-details { flex-wrap: wrap; gap: 13px; } }
+  @media (max-width: 800px) {
+    .contact-page { padding-bottom: 60px; }
+    .contact-page .page-kicker { margin-bottom: 34px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 46px; }
+    .contact-info h1 { font-size: clamp(66px, 18vw, 106px); line-height: .94; }
+    .contact-info h1.contact-title-en { font-size: clamp(57px, 16.3vw, 98px); }
+    .contact-intro { max-width: 470px; margin-top: 26px; font-size: 15px; }
+    .contact-coordinates { margin-top: 24px; }
+    .contact-email { font-size: 28px; padding-bottom: 16px; }
+    .contact-details { gap: 16px; font-size: 10px; line-height: 1.6; align-items: start; }
+    .contact-details > div { gap: 16px; }
+    .contact-peaks { margin-top: 26px; padding-top: 20px; }
+    .contact-peaks h2 { font-size: 14px; }
+    .contact-peaks-top { gap: 16px; }
+    .contact-peaks p { font-size: 12px; }
+    .contact-peaks > a { margin-top: 13px; }
+    .contact-form-panel { padding-top: 0; }
+    .contact-form-heading { display: flex; justify-content: space-between; gap: 26px; align-items: start; margin-bottom: 24px; padding-bottom: 24px; }
+    .contact-form-heading > .eyebrow { max-width: 80px; }
+    .contact-form-heading > p { max-width: 250px; width: 67%; margin-top: 0; font-size: 13px; }
+  }
+  @media (max-width: 360px) { .contact-info h1 { font-size: 61px; } .contact-info h1.contact-title-en { font-size: 51px; } .contact-details { flex-wrap: wrap; gap: 10px; } }
+</style>

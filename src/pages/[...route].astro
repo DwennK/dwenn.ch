@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HomePage from '../components/HomePage.astro';
+import WorkPage from '../components/WorkPage.astro';
+import AboutPage from '../components/AboutPage.astro';
+import ProjectPage from '../components/ProjectPage.astro';
+import { projects } from '../content/projects';
+import ContactPage from '../components/ContactPage.astro';
+import { routes, type Lang, type PageKey } from '../content/site';
+export function getStaticPaths() {
+  return (Object.keys(routes) as PageKey[]).flatMap(page=>(['fr','en'] as Lang[]).map(lang=>({params:{route:routes[page][lang].replace(/^\//,'').replace(/\/$/,'')||undefined},props:{lang,page}})));
+}
+const { lang, page } = Astro.props;
+const fr=lang==='fr';
+const meta={home:{title:fr?'Développeur full stack à Neuchâtel':'Full stack developer in Switzerland',description:fr?'Je suis Dwenn Kaufmann, développeur full stack à Neuchâtel. Je conçois et développe des sites web et des applications. Fondateur de Peaks.':'I’m Dwenn Kaufmann, a full stack developer in Neuchâtel. I design and build websites and applications. Founder of Peaks.'},work:{title:fr?'Mes réalisations':'Selected work',description:fr?'POS Téléphonie, Easy Salaires, Canapey et les sites réalisés avec Peaks. Découvrez les produits que je conçois et développe.':'POS Téléphonie, Easy Salaires, Canapey and the websites I built with Peaks. Explore the products I design and develop.'},contact:{title:fr?'Parlons de votre projet':'Let’s talk about your project',description:fr?'Une idée, une application, une intégration ? Écrivez à Dwenn Kaufmann, développeur full stack à Neuchâtel.':'An idea, an application or an integration? Get in touch with Dwenn Kaufmann, full stack developer in Neuchâtel.'}};
+const project = projects.find(p=>p.key===page);
+const current = project ? {title:project.name,description:project[lang].lead} : page==='about' ? {title:fr?'À propos de moi':'About me',description:fr?'Dwenn Kaufmann, développeur full stack et fondateur de Peaks. Mon parcours, mes outils et quelques jeux qui ont marqué mon enfance.':'Dwenn Kaufmann, full stack developer and founder of Peaks. My background, tools and a few games I grew up with.'} : meta[page as keyof typeof meta];
+---
+<Layout lang={lang} page={page} title={current.title} description={current.description} noFooter={page==='contact'}>
+ {page==='home' && <HomePage lang={lang} />}
+ {page==='work' && <WorkPage lang={lang} />}
+ {page==='contact' && <ContactPage lang={lang} />}
+ {page==='about' && <AboutPage lang={lang} />}
+ {project && <ProjectPage lang={lang} project={project} />}
+</Layout>

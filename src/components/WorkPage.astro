@@ -1,0 +1,38 @@
+---
+import { type Lang } from '../content/site';
+import { projects } from '../content/projects';
+import ProjectShowcase from './ProjectShowcase.astro';
+import Peaks from './Peaks.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+---
+<section class:list={['work-intro', { 'work-intro--en': !fr }]} aria-labelledby="work-title">
+  <div class="work-intro__top"><span>{fr ? 'DÉVELOPPEMENT / SÉLECTION' : 'DEVELOPMENT / SELECTED WORK'}</span><span>01—03</span></div>
+  <h1 id="work-title">{fr ? 'Projets.' : 'Selected work.'}</h1>
+  <div class="work-intro__bottom">
+    <p>{fr ? 'Des logiciels que je conçois et développe de bout en bout : une application de gestion, un outil de paie et un launcher pour PC de salon.' : 'Software I design and build from end to end: a shop management app, a payroll tool and a launcher for living-room PCs.'}</p>
+    <nav class="work-index" aria-label={fr ? 'Parcourir les projets' : 'Browse projects'}>
+      {projects.map(project => <a href={`#project-${project.key}`}><span>{project.number}</span><span>{project.name}</span><span aria-hidden="true">↓</span></a>)}
+      <a href="#peaks"><span>04</span><span>{fr ? 'Les sites avec Peaks' : 'Websites with Peaks'}</span><span aria-hidden="true">↓</span></a>
+    </nav>
+  </div>
+</section>
+<ProjectShowcase lang={lang} full />
+<Peaks lang={lang} />
+<style>
+  .work-intro{padding:46px var(--gutter) 100px;background:var(--paper);color:var(--ink)}
+  .work-intro__top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono,monospace);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+  .work-intro h1{font-size:clamp(112px,18.4vw,290px);line-height:.84;font-weight:780;letter-spacing:-.075em;word-spacing:.075em;margin-top:64px}
+  .work-intro--en h1{font-size:clamp(90px,13.4vw,218px)}
+  .work-intro__bottom{display:grid;grid-template-columns:1fr .64fr;gap:14%;align-items:start;margin-top:68px}
+  .work-intro__bottom>p{max-width:520px;font-size:clamp(18px,1.7vw,26px);line-height:1.4;letter-spacing:-.035em}
+  .work-index{display:flex;flex-direction:column;max-width:430px;width:100%;justify-self:end}
+  .work-index a{display:grid;grid-template-columns:38px 1fr 20px;gap:18px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .work-index a:first-child{border-top:1px solid var(--line)}
+  .work-index a>span:first-child{font-family:var(--mono,monospace);font-size:10px;color:var(--muted)}
+  .work-index a>span:last-child{justify-self:end;transition:transform .2s}
+  .work-index a:hover>span:last-child{transform:translateY(3px)}
+  @media(max-width:800px){.work-intro{padding-top:30px;padding-bottom:64px}.work-intro__top{font-size:9px}.work-intro h1{font-size:25vw;margin-top:54px}.work-intro--en h1{font-size:20vw;max-width:340px;line-height:.9}.work-intro__bottom{grid-template-columns:1fr;gap:35px;margin-top:38px}.work-intro__bottom>p{font-size:18px;max-width:390px}.work-index{max-width:none}.work-index a{font-size:13px;min-height:48px}}
+  @media(prefers-reduced-motion:reduce){.work-index a>span:last-child{transition:none}}
+</style>

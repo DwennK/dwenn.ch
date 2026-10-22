@@ -1,0 +1,13 @@
+---
+import { type Lang, path, profile } from '../content/site';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+---
+<section class="about-teaser" aria-labelledby="about-teaser-heading">
+  <img src={profile.portrait} width="709" height="945" alt={fr?'Dwenn Kaufmann, développeur full stack.':'Dwenn Kaufmann, full stack developer.'} loading="lazy" />
+  <div><h2 id="about-teaser-heading">{fr?'Un peu plus sur moi':'A little more about me'}</h2><p>{fr?'Je suis développeur full stack à Neuchâtel. Je programme depuis l’enfance et je travaille dans le web depuis plus de dix ans. J’aime concevoir un produit, comprendre ses problèmes et le développer jusqu’au bout.':'I’m a full stack developer in Neuchâtel. I’ve been programming since childhood and working in web development for over ten years. I enjoy designing a product, working through its problems and building it from start to finish.'}</p><a href={path('about',lang)}>{fr?'À propos':'About me'}<span aria-hidden="true">↗</span></a></div>
+</section>
+<style>
+.about-teaser{max-width:1344px;margin:0 auto;padding:56px var(--gutter);display:grid;grid-template-columns:240px minmax(0,700px);gap:60px;align-items:center}.about-teaser img{width:240px;height:auto;aspect-ratio:3/4;object-fit:cover}.about-teaser h2{font-size:clamp(30px,4vw,55px);line-height:1.1;letter-spacing:-.045em;font-weight:600;margin-bottom:22px}.about-teaser p{font-size:18px;line-height:1.75;color:var(--muted)}.about-teaser a{display:inline-flex;gap:24px;font-size:14px;line-height:1.6;border-bottom:1px solid var(--line);padding:8px 0;margin-top:22px}.about-teaser a:hover{border-color:var(--ink)}@media(max-width:700px){.about-teaser{grid-template-columns:105px minmax(0,1fr);gap:24px;padding-top:36px;padding-bottom:36px;align-items:start}.about-teaser img{width:105px}.about-teaser h2{font-size:29px;margin-bottom:18px}.about-teaser p{font-size:14px}.about-teaser a{font-size:13px}}
+</style>

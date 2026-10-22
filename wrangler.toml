@@ -14,7 +14,7 @@ TURNSTILE_SITE_KEY = "0x4AAAAAAD1xCfhJjR1UGuKA"
 TURNSTILE_EXPECTED_HOSTNAMES = "dwenn.ch,www.dwenn.ch"
 
 [assets]
-directory = "."
+directory = "./dist"
 binding = "ASSETS"
 run_worker_first = ["/api/*"]
 

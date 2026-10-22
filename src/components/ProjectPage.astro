@@ -1,0 +1,225 @@
+---
+import { path, type Lang } from '../content/site';
+import { projects, type Project } from '../content/projects';
+
+interface Props {
+  lang: Lang;
+  project: Project;
+}
+
+const { lang, project } = Astro.props;
+const fr = lang === 'fr';
+const copy = project[lang];
+const next = projects[(projects.findIndex((item) => item.key === project.key) + 1) % projects.length]!;
+const nameParts = {
+  pos: ['POS', 'Téléphonie'],
+  salaires: ['Easy', 'Salaires'],
+  canapey: ['Canapey'],
+}[project.key];
+const imageHeight = project.key === 'salaires' ? 1165 : 900;
+const image2Height = project.key === 'salaires' ? 1074 : 900;
+const expand = fr ? 'Agrandir la capture' : 'View full-size screenshot';
+const newTab = fr ? 'nouvel onglet' : 'new tab';
+const sections = [
+  { title: fr ? 'Le besoin' : 'The need', text: copy.origin },
+  { title: fr ? 'Le point technique' : 'The technical challenge', text: copy.challenge },
+  { title: fr ? 'Le développement' : 'Development', text: copy.approach },
+];
+---
+
+<article class:list={['case-study', `case--${project.key}`]} style={`--project-color:${project.color}`}>
+  <header class="case-header">
+    <div class="case-topline">
+      <a class="case-back" href={path('work', lang)}><span aria-hidden="true">←</span>{fr ? 'Toutes les réalisations' : 'All projects'}</a>
+      <p class="case-label"><span>{project.number} / 03</span>{copy.category}</p>
+    </div>
+    <h1 class="case-name">{nameParts.map((part, index) => <>{index > 0 && ' '}<span>{part}</span></>)}</h1>
+    <div class="case-introduction">
+      <p class="case-tagline">{copy.tagline}</p>
+      <div class="case-summary">
+        <p class="case-lead">{copy.lead}</p>
+        <p class="case-status">{copy.status}</p>
+      </div>
+    </div>
+  </header>
+
+  <figure class="case-main-image">
+    <div class="case-image-bar">
+      <span class="case-label">01 — {fr ? 'Interface' : 'Interface'}</span>
+      <a class="case-image-link" href={project.image} target="_blank" rel="noopener noreferrer" aria-label={`${expand} — ${project.name} (${newTab})`}>{expand}<span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="case-matte">
+      <img src={project.image} width="1440" height={imageHeight} alt={copy.imageAlt} fetchpriority="high" decoding="async" />
+    </div>
+    <figcaption>{copy.caption}</figcaption>
+  </figure>
+
+  <section class="case-overview" aria-label={fr ? 'Conception et développement' : 'Design and development'}>
+    {sections.map((section, index) => (
+      <div class="case-overview-row">
+        <h2><span class="case-label" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{section.title}</h2>
+        <p>{section.text}</p>
+      </div>
+    ))}
+  </section>
+
+  <section class="case-features" aria-labelledby="case-features-title">
+    <div class="case-section-heading">
+      <p class="case-label">{fr ? 'Dans l’application' : 'In the application'}</p>
+      <h2 id="case-features-title">{fr ? 'Fonctionnalités' : 'Features'}</h2>
+    </div>
+    <ul class="case-feature-list">
+      {copy.features.map((feature) => (
+        <li><h3>{feature.title}</h3><p>{feature.text}</p></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="case-detail" aria-labelledby="case-detail-title">
+    <div class="case-detail-copy">
+      <div><p class="case-label">02 — {fr ? 'Interface' : 'Interface'}</p><h2 id="case-detail-title">{copy.detailTitle}</h2></div>
+      <p>{copy.detailText}</p>
+    </div>
+    <figure>
+      <div class="case-matte">
+        <img src={project.image2} width="1440" height={image2Height} alt={copy.image2Alt} loading="lazy" decoding="async" />
+      </div>
+      <figcaption><span>{project.name}</span><a class="case-image-link" href={project.image2} target="_blank" rel="noopener noreferrer" aria-label={`${expand} — ${fr ? 'deuxième vue' : 'second view'} (${newTab})`}>{expand}<span aria-hidden="true">↗</span></a></figcaption>
+    </figure>
+  </section>
+
+  <section class="case-build" aria-labelledby="case-build-title">
+    <div class="case-build-title"><p class="case-label">{fr ? 'Code et outils' : 'Code and tools'}</p><h2 id="case-build-title">{fr ? 'Technologies' : 'Technologies'}</h2></div>
+    <div class="case-build-content">
+      <p class="case-role">{fr ? 'Conception de l’interface et développement complet de l’application.' : 'Interface design and full application development.'}</p>
+      <ul class="case-stack" aria-label={fr ? 'Technologies utilisées' : 'Technologies used'}>{project.stack.map((technology) => <li>{technology}</li>)}</ul>
+      <a class="case-code-link" href={project.repo} target="_blank" rel="noopener noreferrer" aria-label={`${fr ? 'Voir le code sur GitHub' : 'View the code on GitHub'} (${newTab})`}>{fr ? 'Voir le code sur GitHub' : 'View the code on GitHub'}<span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+
+  <nav class="case-next" aria-label={fr ? 'Autres projets' : 'More projects'}>
+    <div class="case-next-top"><span class="case-label">{fr ? 'Projet suivant' : 'Next project'} — {next.number} / 03</span><a class="case-back" href={path('work', lang)}>{fr ? 'Toutes les réalisations' : 'All projects'}<span aria-hidden="true">↗</span></a></div>
+    <a class="case-next-link" href={path(next.key, lang)}><span class="case-next-name">{next.name}</span><span class="case-next-arrow" aria-hidden="true">↗</span></a>
+    <div class="case-next-bottom"><p>{next[lang].tagline}</p><a class="case-code-link case-contact-link" href={path('contact', lang)}>{fr ? 'Parler d’un projet' : 'Discuss a project'}<span aria-hidden="true">↗</span></a></div>
+  </nav>
+</article>
+
+<style>
+  .case-study{--case-space:96px;color:var(--ink);background:var(--paper)}
+  .case-header,.case-main-image,.case-overview,.case-features,.case-detail,.case-build,.case-next{margin-left:var(--gutter);margin-right:var(--gutter)}
+  .case-header{padding:30px 0 48px}
+  .case-topline,.case-label,.case-back,.case-image-bar,.case-image-link,.case-code-link{display:flex;align-items:center}
+  .case-topline{justify-content:space-between;gap:24px}
+  .case-label{font-family:var(--mono);font-size:11px;font-weight:400;line-height:1.5;letter-spacing:.025em;gap:24px;color:var(--muted)}
+  .case-back{gap:12px;min-height:44px;font-size:12px;font-weight:500}
+  .case-back span{font-size:20px;transition:transform .2s ease}
+  .case-back:hover span{transform:translateX(-3px)}
+  .case-name{font-family:var(--sans);font-style:normal;font-size:clamp(72px,9.4vw,160px);font-weight:650;line-height:.98;letter-spacing:-.07em;margin:55px 0 42px}
+  .case-name span{white-space:nowrap}
+  .case-introduction{display:grid;grid-template-columns:1.1fr 1fr;gap:7vw;align-items:start}
+  .case-tagline{font-size:clamp(25px,2.7vw,42px);font-weight:450;line-height:1.18;letter-spacing:-.035em;max-width:650px}
+  .case-lead{font-size:17px;line-height:1.6;max-width:630px;color:var(--muted)}
+  .case-status{font-family:var(--mono);font-size:11px;line-height:1.6;margin-top:24px;color:var(--muted)}
+  .case-image-bar{justify-content:space-between;gap:20px;margin-bottom:14px}
+  .case-image-link{gap:10px;min-height:44px;font-size:12px;line-height:1.4}
+  .case-image-link span,.case-code-link span{font-size:20px;transition:transform .2s ease}
+  .case-image-link:hover span,.case-code-link:hover span{transform:translate(2px,-2px)}
+  .case-matte{background:var(--project-color);padding:clamp(14px,2.5vw,40px)}
+  .case-matte img{display:block;width:100%;height:auto}
+  .case-main-image>figcaption{padding-top:15px;font-size:11px;line-height:1.6;color:var(--muted)}
+  .case-overview{padding-top:var(--case-space)}
+  .case-overview-row{display:grid;grid-template-columns:1fr 1.35fr;gap:7vw;padding:31px 0 35px;border-top:1px solid var(--line)}
+  .case-overview-row h2{display:flex;gap:24px;align-items:baseline;font-size:24px;font-weight:500;line-height:1.25;letter-spacing:-.035em}
+  .case-overview-row h2>.case-label{display:inline;font-size:10px;flex-shrink:0}
+  .case-overview-row>p{font-size:17px;line-height:1.65;color:var(--muted);max-width:760px}
+  .case-features{padding-top:65px}
+  .case-section-heading{margin-bottom:35px}
+  .case-section-heading>.case-label{margin-bottom:18px}
+  .case-section-heading h2{font-size:clamp(42px,5vw,76px);font-weight:550;line-height:1.05;letter-spacing:-.06em}
+  .case-feature-list{list-style:none;margin:0;padding:0}
+  .case-feature-list>li{display:grid;grid-template-columns:1fr 1.35fr;gap:7vw;padding:28px 0;border-top:1px solid var(--line)}
+  .case-feature-list>li:last-child{border-bottom:1px solid var(--line)}
+  .case-feature-list h3{font-size:24px;font-weight:500;line-height:1.2;letter-spacing:-.035em}
+  .case-feature-list p{font-size:16px;line-height:1.6;color:var(--muted);max-width:760px}
+  .case-detail{padding-top:var(--case-space)}
+  .case-detail-copy{display:grid;grid-template-columns:1fr 1.35fr;gap:7vw;align-items:end;padding-bottom:30px}
+  .case-detail-copy .case-label{margin-bottom:18px}
+  .case-detail-copy h2{font-size:clamp(36px,4vw,62px);font-weight:550;line-height:1.07;letter-spacing:-.055em;max-width:620px}
+  .case-detail-copy>p{font-size:17px;line-height:1.6;color:var(--muted);max-width:760px}
+  .case-detail figcaption{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-top:10px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .case-detail figcaption a{font-family:var(--sans);color:var(--ink)}
+  .case-build{display:grid;grid-template-columns:1fr 1.35fr;gap:7vw;padding:var(--case-space) 0}
+  .case-build-title>.case-label{margin-bottom:18px}
+  .case-build h2{font-size:clamp(36px,4vw,62px);font-weight:550;line-height:1.07;letter-spacing:-.055em}
+  .case-build-content{padding-top:2px}
+  .case-role{font-size:16px;line-height:1.6;color:var(--muted)}
+  .case-stack{display:flex;flex-wrap:wrap;gap:12px 23px;list-style:none;padding:25px 0;margin:24px 0 17px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .case-stack li{font-family:var(--mono);font-size:14px;line-height:1.5}
+  .case-code-link{width:fit-content;gap:22px;min-height:44px;font-size:14px;font-weight:500}
+  .case-next{padding:34px 0 56px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .case-next-top{display:flex;justify-content:space-between;align-items:center;gap:24px}
+  .case-next-link{display:flex;align-items:center;justify-content:space-between;gap:32px;margin-top:37px}
+  .case-next-name{font-size:clamp(58px,7.8vw,128px);font-weight:600;line-height:1.05;letter-spacing:-.065em}
+  .case-next-arrow{font-size:clamp(60px,8vw,128px);line-height:1;font-weight:350;flex-shrink:0;transition:transform .25s ease}
+  .case-next-link:hover .case-next-arrow{transform:translate(5px,-5px)}
+  .case-next-bottom{display:flex;justify-content:space-between;gap:30px;align-items:center;margin-top:22px}
+  .case-next-bottom>p{font-size:18px;line-height:1.5;color:var(--muted)}
+  .case-contact-link{flex-shrink:0}
+  @media(max-width:1000px){.case-introduction,.case-overview-row,.case-feature-list>li,.case-detail-copy,.case-build{gap:5vw}.case-overview-row h2,.case-feature-list h3{font-size:22px}.case-overview-row h2{gap:16px}.case-lead,.case-overview-row>p,.case-detail-copy>p{font-size:16px}.case-status{font-size:10px}.case-build h2{font-size:37px}}
+  @media(max-width:700px){
+    .case-study{--case-space:64px}
+    .case-header{padding-top:18px;padding-bottom:31px}
+    .case-topline{gap:16px;align-items:flex-start}
+    .case-back{font-size:11px;gap:9px}
+    .case-topline>.case-label{flex-direction:column;gap:2px;align-items:flex-end;text-align:right;font-size:9px;padding-top:7px}
+    .case-name{font-size:19vw;line-height:.96;letter-spacing:-.065em;margin:34px 0 28px}
+    .case-name>span{display:block}
+    .case--pos .case-name{font-size:18vw}
+    .case-introduction{display:block}
+    .case-tagline{font-size:28px;line-height:1.17;max-width:490px;letter-spacing:-.04em}
+    .case-summary{margin-top:21px}
+    .case-lead{font-size:15px;line-height:1.6}
+    .case-status{font-size:10px;margin-top:18px}
+    .case-image-bar{gap:15px;margin-bottom:8px}
+    .case-image-bar>.case-label{font-size:9px}
+    .case-image-link{font-size:10px;gap:8px}
+    .case-image-link>span{font-size:17px}
+    .case-matte{padding:10px}
+    .case-main-image>figcaption{font-size:10px;padding-top:11px;line-height:1.5}
+    .case-overview-row{display:block;padding:23px 0 28px}
+    .case-overview-row h2{font-size:23px;gap:16px}
+    .case-overview-row h2>.case-label{font-size:9px}
+    .case-overview-row>p{font-size:15px;margin-top:17px;line-height:1.65}
+    .case-features{padding-top:36px}
+    .case-section-heading{margin-bottom:25px}
+    .case-section-heading>.case-label{font-size:10px;margin-bottom:15px}
+    .case-section-heading h2{font-size:11.3vw;letter-spacing:-.065em}
+    .case-feature-list>li{display:block;padding:23px 0}
+    .case-feature-list h3{font-size:24px}
+    .case-feature-list p{font-size:14px;margin-top:12px;line-height:1.6}
+    .case-detail-copy{display:block;padding-bottom:24px}
+    .case-detail-copy .case-label{font-size:10px;margin-bottom:14px}
+    .case-detail-copy h2{font-size:39px;max-width:450px}
+    .case-detail-copy>p{font-size:15px;margin-top:20px}
+    .case-detail figcaption{font-size:10px;gap:12px;padding-top:6px}
+    .case-build{display:block}
+    .case-build-title>.case-label{font-size:10px;margin-bottom:14px}
+    .case-build h2{font-size:39px}
+    .case-build-content{padding-top:24px}
+    .case-role{font-size:15px}
+    .case-stack{padding:21px 0;gap:11px 19px;margin:20px 0 13px}
+    .case-stack li{font-size:12px}
+    .case-code-link{font-size:13px}
+    .case-next{padding:24px 0 33px}
+    .case-next-top{gap:12px;align-items:center}
+    .case-next-top>.case-label{font-size:9px;max-width:145px}
+    .case-next-top>.case-back{font-size:10px;gap:6px}
+    .case-next-link{gap:18px;margin-top:24px;align-items:flex-start}
+    .case-next-name{font-size:11.5vw;line-height:1.06;letter-spacing:-.06em}
+    .case-next-arrow{font-size:49px;margin-top:-3px}
+    .case-next-bottom{display:block;margin-top:18px}
+    .case-next-bottom>p{font-size:15px;max-width:310px}
+    .case-contact-link{margin-top:14px}
+  }
+  @media(prefers-reduced-motion:reduce){.case-back span,.case-image-link span,.case-code-link span,.case-next-arrow{transition:none}.case-back:hover span,.case-image-link:hover span,.case-code-link:hover span,.case-next-link:hover .case-next-arrow{transform:none}}
+</style>

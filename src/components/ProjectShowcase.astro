@@ -1,0 +1,100 @@
+---
+import { projects } from '../content/projects';
+import { type Lang, path } from '../content/site';
+interface Props { lang: Lang; full?: boolean }
+const { lang, full = false } = Astro.props;
+const fr = lang === 'fr';
+const productType = {
+  pos: fr ? 'APPLICATION WEB' : 'WEB APPLICATION',
+  salaires: fr ? 'LOGICIEL DESKTOP / GRATUIT' : 'DESKTOP SOFTWARE / FREE',
+  canapey: fr ? 'PC DE SALON / EXPÉRIMENTAL' : 'LIVING-ROOM PC / EXPERIMENTAL',
+};
+---
+<section class:list={['project-showcase', { 'is-full': full }]} id={full ? 'projects' : 'work'} aria-label={fr ? 'Mes logiciels' : 'My software'}>
+  {!full && <div class="showcase-heading"><span class="showcase-label">{fr ? 'SÉLECTION / 01—03' : 'SELECTED / 01—03'}</span><h2>{fr ? 'Ce que je développe.' : 'What I build.'}</h2></div>}
+  {projects.map(project => {
+    const c = project[lang];
+    return <article class={`project-feature project-feature--${project.key}`} id={`project-${project.key}`} aria-labelledby={`title-${project.key}`}>
+      <header class="project-meta"><span class="project-number">{project.number}</span><span class="project-type">{productType[project.key]}</span><span class="project-category">{c.category}</span></header>
+      <div class="project-composition">
+        <div class="project-copy">
+          <h2 class="project-title" id={`title-${project.key}`}><a href={path(project.key, lang)}>{project.name}</a></h2>
+          <div class="project-summary"><p>{c.lead}</p><a class="project-details" href={path(project.key, lang)}><span>{fr ? 'Voir le projet' : 'View project'}</span><span aria-hidden="true">↗</span></a></div>
+        </div>
+        <figure class="project-media">
+          <a class="project-image-link" href={path(project.key, lang)} aria-label={`${fr ? 'Voir le projet' : 'View project'} ${project.name}`}>
+            <img src={project.image} alt={c.imageAlt} width="1440" height={project.key === 'salaires' ? '1165' : '900'} loading="lazy" decoding="async" />
+            <span class="project-image-action" aria-hidden="true">↗</span>
+          </a>
+          <figcaption>{c.caption}</figcaption>
+        </figure>
+        <div class="project-build"><span>{fr ? 'DÉVELOPPEMENT' : 'BUILT WITH'}</span><ul>{project.stack.map(tech => <li>{tech}</li>)}</ul></div>
+      </div>
+    </article>;
+  })}
+</section>
+<style>
+  .project-showcase{padding:0 var(--gutter);background:var(--paper);color:var(--ink)}
+  .showcase-heading{padding:80px 0 60px;max-width:1000px}
+  .showcase-label,.project-meta,.project-build,.project-media figcaption{font-family:var(--mono,monospace)}
+  .showcase-label{color:var(--muted);font-size:11px;letter-spacing:.04em}
+  .showcase-heading h2{font-size:clamp(64px,8vw,130px);margin-top:28px;letter-spacing:-.075em}
+  .project-feature{border-top:1px solid var(--line);padding:28px 0 112px;scroll-margin-top:28px}
+  .project-meta{display:grid;grid-template-columns:110px 1fr auto;align-items:center;gap:25px;font-size:10px;letter-spacing:.035em}
+  .project-number{font-size:52px;line-height:1;color:var(--muted);letter-spacing:-.08em;font-weight:400}
+  .project-type{color:var(--ink)}
+  .project-category{color:var(--muted);text-align:right}
+  .project-composition{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:28px;row-gap:22px;margin-top:45px}
+  .project-copy{grid-column:1/-1;display:grid;grid-template-columns:1.5fr 1fr;align-items:start;gap:80px;margin-bottom:28px}
+  .project-copy .project-title{font-size:clamp(64px,7.7vw,124px);line-height:.92;letter-spacing:-.075em;word-spacing:.075em;font-weight:760;max-width:900px}
+  .project-summary{padding-top:5px;max-width:430px;justify-self:end}
+  .project-summary>p{font-size:16px;line-height:1.6;color:var(--muted)}
+  .project-details{display:inline-flex;align-items:center;justify-content:space-between;min-width:160px;min-height:44px;gap:35px;margin-top:26px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .project-details>span:last-child{font-size:24px;line-height:1;transition:transform .25s}
+  .project-details:hover>span:last-child{transform:translate(3px,-3px)}
+  .project-media{grid-column:3/-1;min-width:0}
+  .project-image-link{display:block;position:relative;overflow:hidden;border:1px solid #ffffff18;background:#17191c}
+  .project-image-link img{width:100%;height:auto;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+  .project-image-link:hover img{transform:scale(1.015)}
+  .project-image-action{position:absolute;bottom:20px;right:20px;display:flex;align-items:center;justify-content:center;width:50px;height:50px;background:#111214;color:#f1f1ee;border:1px solid #ffffff45;font-size:29px;transition:background .25s,color .25s}
+  .project-image-link:hover .project-image-action{background:#f1f1ee;color:#111214}
+  .project-media figcaption{color:var(--muted);font-size:10px;line-height:1.5;margin-top:14px;max-width:680px}
+  .project-build{grid-column:1/3;grid-row:2;align-self:end;font-size:10px;line-height:1.6;padding-bottom:32px}
+  .project-build>span{display:block;margin-bottom:18px;color:var(--muted);letter-spacing:.035em}
+  .project-build ul{display:flex;flex-wrap:wrap;gap:6px 16px;list-style:none;padding:0;margin:0;max-width:190px}
+  .project-feature--salaires{padding-top:28px;padding-bottom:140px}
+  .project-feature--salaires .project-composition{align-items:start;margin-top:55px}
+  .project-feature--salaires .project-copy{grid-column:1/5;grid-row:1;display:block;margin:30px 0 0}
+  .project-feature--salaires .project-title{font-size:clamp(64px,6.8vw,106px);max-width:390px}
+  .project-feature--salaires .project-summary{margin-top:35px;padding:0;max-width:330px}
+  .project-feature--salaires .project-media{grid-column:6/-1;grid-row:1/3}
+  .project-feature--salaires .project-build{grid-column:1/5;grid-row:2;padding-top:20px;padding-bottom:0;align-self:end}
+  .project-feature--salaires .project-build ul{max-width:330px}
+  .project-feature--canapey .project-copy{display:contents}
+  .project-feature--canapey .project-title{grid-column:1/-1;font-size:clamp(100px,12.8vw,210px);margin-bottom:14px}
+  .project-feature--canapey .project-summary{grid-column:7/-1;grid-row:3;max-width:560px;margin-top:14px}
+  .project-feature--canapey .project-media{grid-column:1/-1;grid-row:2}
+  .project-feature--canapey .project-build{grid-column:1/6;grid-row:3;align-self:start;margin-top:20px;padding:0}
+  .project-feature--canapey .project-build ul{max-width:420px}
+  .project-feature--canapey .project-image-link{background:#08090b}
+  @media(min-width:1700px){.project-summary>p{font-size:18px}.project-meta{font-size:11px}.project-feature--salaires .project-summary{max-width:390px}}
+  @media(max-width:1050px) and (min-width:801px){.project-copy{grid-template-columns:1.25fr 1fr;gap:35px}.project-copy .project-title{font-size:7.2vw}.project-summary>p{font-size:14px}.project-feature--salaires .project-copy{grid-column:1/6}.project-feature--salaires .project-summary{max-width:310px}.project-feature--salaires .project-title{font-size:7.8vw}.project-feature--salaires .project-media{grid-column:7/-1}.project-feature--salaires .project-build{grid-column:1/6}.project-composition{column-gap:20px}}
+  @media(max-width:800px){
+    .showcase-heading{padding:65px 0 35px}.showcase-heading h2{font-size:17vw}
+    .project-feature,.project-feature--salaires{padding:23px 0 66px;scroll-margin-top:20px}
+    .project-meta{grid-template-columns:55px 1fr;gap:16px;font-size:9px;line-height:1.45}.project-number{font-size:38px}.project-category{display:none}
+    .project-composition,.project-feature--salaires .project-composition{display:flex;flex-direction:column;gap:20px;margin-top:32px}
+    .project-copy,.project-feature--salaires .project-copy{display:block;margin:0;width:100%}
+    .project-copy .project-title,.project-feature--salaires .project-title{font-size:15.5vw;max-width:100%;line-height:.95}
+    .project-summary,.project-feature--salaires .project-summary{padding:0;margin-top:25px;max-width:none}
+    .project-summary>p{font-size:14px;line-height:1.6}
+    .project-details{margin-top:16px;min-width:150px;font-size:12px}
+    .project-media,.project-feature--salaires .project-media{width:100%;margin-top:8px}
+    .project-image-action{height:40px;width:40px;font-size:23px;right:12px;bottom:12px}
+    .project-media figcaption{font-size:10px;line-height:1.6;margin-top:11px}
+    .project-build,.project-feature--salaires .project-build,.project-feature--canapey .project-build{margin:0;padding:3px 0 0;font-size:9px;align-self:stretch}
+    .project-build>span{margin-bottom:8px}.project-build ul,.project-feature--salaires .project-build ul{max-width:none;gap:4px 15px}
+    .project-feature--canapey .project-copy{display:contents}.project-feature--canapey .project-title{font-size:22vw;margin:0;order:0}.project-feature--canapey .project-media{order:1}.project-feature--canapey .project-summary{order:2;margin-top:3px;max-width:none}.project-feature--canapey .project-build{order:3}
+  }
+  @media(prefers-reduced-motion:reduce){.project-image-link img,.project-image-action,.project-details>span:last-child{transition:none}.project-image-link:hover img{transform:none}}
+</style>

@@ -1,0 +1,88 @@
+import type { Lang } from './site';
+
+export const aboutContent = {
+  fr: {
+    label: 'À propos',
+    title: 'Dwenn Kaufmann',
+    role: 'Développeur full stack à Neuchâtel, Suisse.',
+    intro: 'Je conçois et développe des sites web, des applications métier et des logiciels desktop. Je travaille dans le web depuis plus de dix ans et je suis fondateur de Peaks.',
+    approach: 'J’aime prendre en charge un projet dans son ensemble : comprendre le besoin, dessiner l’interface, développer les fonctionnalités et relier les outils nécessaires.',
+    portraitAlt: 'Dwenn Kaufmann, développeur full stack.',
+    workCta: 'Mes réalisations',
+    contactCta: 'Me contacter',
+    storyTitle: 'Comment j’ai commencé',
+    story: [
+      'Je suis né en 1994. Mes premiers souvenirs d’informatique, ce sont Windows 98, Adibou et un écran cathodique. J’aimais jouer, mais j’ai vite voulu comprendre comment les logiciels fonctionnaient.',
+      'Vers dix ans, j’ai commencé à programmer avec les cours de C de Mathieu Nebra sur le Site du Zéro, devenu OpenClassrooms. Depuis, j’ai continué à apprendre en construisant mes propres projets.',
+      'Ce qui me plaît toujours autant : chercher pourquoi quelque chose ne fonctionne pas, essayer une autre approche et trouver une solution. C’est aussi ce qui me donne envie de créer des outils pour mes propres besoins, comme Canapey.',
+    ],
+    childhoodAlt: 'Dwenn enfant, devant Adibou sur un ordinateur.',
+    childhoodCaption: 'Mes premiers souvenirs d’informatique.',
+    skillsTitle: 'Ce que je fais',
+    skills: [
+      { title: 'Interfaces web', text: 'Design, UX et développement frontend avec Vue, Nuxt et Astro.' },
+      { title: 'Backend et données', text: 'API, règles métier, bases SQL et intégrations entre services.' },
+      { title: 'Applications desktop', text: 'Logiciels avec Tauri, Rust et une interface Vue.' },
+      { title: 'Automatisation', text: 'Scripts Python, connexion d’outils et intégration de l’IA selon le besoin.' },
+    ],
+    historyText: 'C# est également un socle de mon parcours, même si mes projets actuels reposent surtout sur les technologies ci-dessus.',
+    playTitle: 'Côté jeux',
+    playIntro: 'J’aime notamment Pokémon Bleu, Mario Kart 64 et Donkey Kong 64. Ils ont aussi leur place ici.',
+    sourceLabel: 'Image officielle : Nintendo',
+    externalLabel: 'nouvel onglet',
+  },
+  en: {
+    label: 'About',
+    title: 'Dwenn Kaufmann',
+    role: 'Full stack developer in Neuchâtel, Switzerland.',
+    intro: 'I design and build websites, business applications and desktop software. I’ve worked in web development for over ten years, and I’m a founder of Peaks.',
+    approach: 'I like working on the whole project: understanding the need, designing the interface, developing the features and connecting the tools it requires.',
+    portraitAlt: 'Dwenn Kaufmann, full stack developer.',
+    workCta: 'My work',
+    contactCta: 'Get in touch',
+    storyTitle: 'How I got started',
+    story: [
+      'I was born in 1994. My earliest computer memories are Windows 98, Adibou and a CRT monitor. I enjoyed playing games, but soon wanted to understand how software worked.',
+      'At around ten, I started programming with Mathieu Nebra’s C tutorials on Site du Zéro, now OpenClassrooms. Since then, I’ve kept learning by building projects of my own.',
+      'I still enjoy figuring out why something isn’t working, trying another approach and finding a solution. It also makes me want to build tools for my own needs, like Canapey.',
+    ],
+    childhoodAlt: 'Dwenn as a child, playing Adibou on a computer.',
+    childhoodCaption: 'My earliest computer memories.',
+    skillsTitle: 'What I do',
+    skills: [
+      { title: 'Web interfaces', text: 'Design, UX and frontend development with Vue, Nuxt and Astro.' },
+      { title: 'Backend and data', text: 'APIs, business rules, SQL databases and service integrations.' },
+      { title: 'Desktop applications', text: 'Software built with Tauri, Rust and a Vue interface.' },
+      { title: 'Automation', text: 'Python scripts, connected tools and AI integration where it is useful.' },
+    ],
+    historyText: 'C# is also an important foundation of my experience, although my current projects mostly use the technologies above.',
+    playTitle: 'A few games I enjoy',
+    playIntro: 'Pokémon Blue, Mario Kart 64 and Donkey Kong 64 are among the games I enjoy. They have a place here too.',
+    sourceLabel: 'Official artwork: Nintendo',
+    externalLabel: 'new tab',
+  },
+} satisfies Record<Lang, unknown>;
+
+export const influences = [
+  {
+    title: { fr: 'Pokémon Bleu', en: 'Pokémon Blue' },
+    image: '/images/influences/pokemon-blue.jpg',
+    alt: { fr: 'Illustration officielle de Pokémon Bleu, avec Tortank.', en: 'Official Pokémon Blue artwork featuring Blastoise.' },
+    source: 'https://www.nintendo.com/en-gb/Games/Game-Boy/Pokemon-Blue-Version-266054.html',
+    credit: { fr: '© 2016 Pokémon. © 1995–2016 Nintendo / Creatures / GAME FREAK.', en: '© 2016 Pokémon. © 1995–2016 Nintendo / Creatures / GAME FREAK.' },
+  },
+  {
+    title: { fr: 'Mario Kart 64', en: 'Mario Kart 64' },
+    image: '/images/influences/mario-kart-64.jpg',
+    alt: { fr: 'Illustration officielle de Mario Kart 64 avec Mario, Luigi et Toad.', en: 'Official Mario Kart 64 artwork with Mario, Luigi and Toad.' },
+    source: 'https://www.nintendo.com/en-gb/Games/Nintendo-64/Mario-Kart-64-269558.html',
+    credit: { fr: '© 1997, 1999 Nintendo. Modèle 3D de Donkey Kong : Rare UK.', en: '© 1997, 1999 Nintendo. Donkey Kong 3-D model: Rare UK.' },
+  },
+  {
+    title: { fr: 'Donkey Kong 64', en: 'Donkey Kong 64' },
+    image: '/images/influences/donkey-kong-64.jpg',
+    alt: { fr: 'Illustration officielle de Donkey Kong 64 et de la famille Kong.', en: 'Official Donkey Kong 64 artwork featuring the Kong family.' },
+    source: 'https://www.nintendo.com/en-gb/Games/Nintendo-64/Donkey-Kong-64-269459.html',
+    credit: { fr: '© 1999 Nintendo. Jeu développé par Rare.', en: '© 1999 Nintendo. Game by Rare.' },
+  },
+];
