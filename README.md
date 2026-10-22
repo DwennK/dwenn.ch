@@ -4,16 +4,18 @@ Portfolio Astro / TypeScript, français à la racine et anglais sous `/en/`. La 
 
 ## Lancer
 
+Le projet utilise pnpm 12.15.0, fixé dans `package.json`. Le fichier `pnpm-lock.yaml` est la référence pour les installations reproductibles.
+
 ```sh
-npm install
-npm run dev
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
 Développement : `http://127.0.0.1:4321`. Pour une prévisualisation de la compilation :
 
 ```sh
-npm run build
-npm run preview -- --port 4399
+pnpm build
+pnpm preview --port 4399
 ```
 
 Prévisualisation : `http://127.0.0.1:4399`. Les deux serveurs ne chargent **aucun secret** et utilisent le vrai Worker avec des bindings vides : le formulaire affiche explicitement son indisponibilité locale et propose `hello@dwenn.ch`. Les succès, erreurs et protections sont testés avec des fournisseurs simulés, sans envoi réel.
@@ -36,9 +38,9 @@ Les sources des images et les faits vérifiés sont consignés dans `docs/`. La 
 ## Vérifications
 
 ```sh
-npm run check
-npm test
-npm run build
+pnpm check
+pnpm test
+pnpm build
 PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 node scripts/site-qa.mjs
 PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 node scripts/layout-qa.mjs
 PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 node scripts/interaction-qa.mjs
@@ -50,6 +52,6 @@ La QA navigateur requiert Google Chrome installé et la preview sur le port 4399
 
 `worker.mjs`, les routes `/api/contact` et `/api/contact/config`, Turnstile, la limitation d’envoi et le binding d’e-mail préexistants sont préservés. Le changement de configuration Cloudflare est limité à `assets.directory = "./dist"`. Les anciennes pages `index.html`, `work.html` et leurs scripts/styles restent conservés à la racine pour préserver le travail antérieur ; Astro sert désormais les pages de `src/`.
 
-`public/_redirects` conserve les anciennes URL HTML. Les liens directs vers les projets, Peaks, À propos et Contact sont disponibles sur l’accueil et la page Projets. Le site génère les métadonnées FR/EN et hreflang. Le sitemap utilise l’intégration officielle `@astrojs/sitemap` : chaque `npm run build` découvre les pages Astro et produit `dist/sitemap-index.xml` et `dist/sitemap-0.xml`. Aucune liste d’URL de sitemap à maintenir. La table de routes existante sert uniquement à associer les traductions ; `robots.txt` reprend automatiquement le domaine configuré dans Astro. L’ancienne URL `/sitemap.xml` redirige en 301 vers l’index. Voir `docs/sitemap.md` pour la validation et le statut de publication.
+`public/_redirects` conserve les anciennes URL HTML. Les liens directs vers les projets, Peaks, À propos et Contact sont disponibles sur l’accueil et la page Projets. Le site génère les métadonnées FR/EN et hreflang. Le sitemap utilise l’intégration officielle `@astrojs/sitemap` : chaque `pnpm build` découvre les pages Astro et produit `dist/sitemap-index.xml` et `dist/sitemap-0.xml`. Aucune liste d’URL de sitemap à maintenir. La table de routes existante sert uniquement à associer les traductions ; `robots.txt` reprend automatiquement le domaine configuré dans Astro. L’ancienne URL `/sitemap.xml` redirige en 301 vers l’index. Voir `docs/sitemap.md` pour la validation et le statut de publication.
 
 La version enrichie avec le sitemap officiel Astro est en production : version Cloudflare `edb80123-35f7-4590-85dc-d0f4d51ff369`. La version précédente `4135251f-18a5-4cf5-99c7-0320b4224a61` reste identifiée pour un retour arrière. Le sitemap a été soumis à Google Search Console le 22 octobre 2026, avec le statut « Opération effectuée ». Le détail, les sauvegardes et les vérifications sont dans `docs/deployment.md`. Les sources sont versionnées sur GitHub ; les captures de QA et archives de publication restent locales dans `output/`.

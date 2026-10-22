@@ -4,7 +4,7 @@ L’ancien endpoint XML fait maison a été remplacé par l’intégration offic
 
 ## Génération
 
-`npm run build` découvre automatiquement les pages statiques Astro, y compris celles produites par `getStaticPaths()`, et écrit `dist/sitemap-index.xml` et `dist/sitemap-0.xml`. Les nouvelles pages Astro sont incluses sans ajout à une liste de sitemap. Les pages d’erreur et endpoints ne sont pas inclus.
+`pnpm build` découvre automatiquement les pages statiques Astro, y compris celles produites par `getStaticPaths()`, et écrit `dist/sitemap-index.xml` et `dist/sitemap-0.xml`. Les nouvelles pages Astro sont incluses sans ajout à une liste de sitemap. Les pages d’erreur et endpoints ne sont pas inclus.
 
 La fonction officielle `serialize` utilise la table existante de `src/content/site.ts` uniquement pour associer les traductions : `/realisations/` avec `/en/work/`, par exemple. Elle conserve aussi `x-default` vers le français, comme le head HTML. Une page sans correspondance dans cette table reste incluse automatiquement.
 
