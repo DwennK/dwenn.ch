@@ -12,7 +12,7 @@ export const aboutContent = {
     contactCta: 'Me contacter',
     storyTitle: 'Comment j’ai commencé',
     story: [
-      'Je suis né en 1994. Mes premiers souvenirs d’informatique, ce sont Windows 98, Adibou et un écran cathodique. J’aimais jouer, mais j’ai vite voulu comprendre comment les logiciels fonctionnaient.',
+      'Passionné d’informatique depuis mon plus jeune âge, j’ai fait mes premiers pas sur un ordinateur à écran cathodique, en jouant à Adibou sous Windows 98.',
       'Vers dix ans, j’ai commencé à programmer avec les cours de C de Mathieu Nebra sur le Site du Zéro, devenu OpenClassrooms. Depuis, j’ai continué à apprendre en construisant mes propres projets.',
       'Ce qui me plaît toujours autant : chercher pourquoi quelque chose ne fonctionne pas, essayer une autre approche et trouver une solution. C’est aussi ce qui me donne envie de créer des outils pour mes propres besoins, comme Canapey.',
     ],
@@ -42,7 +42,7 @@ export const aboutContent = {
     contactCta: 'Get in touch',
     storyTitle: 'How I got started',
     story: [
-      'I was born in 1994. My earliest computer memories are Windows 98, Adibou and a CRT monitor. I enjoyed playing games, but soon wanted to understand how software worked.',
+      'Passionate about computers from an early age, I took my first steps into computing playing Adibou on a Windows 98 PC with a CRT monitor.',
       'At around ten, I started programming with Mathieu Nebra’s C tutorials on Site du Zéro, now OpenClassrooms. Since then, I’ve kept learning by building projects of my own.',
       'I still enjoy figuring out why something isn’t working, trying another approach and finding a solution. It also makes me want to build tools for my own needs, like Canapey.',
     ],
