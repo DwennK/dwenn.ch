@@ -23,12 +23,12 @@ Prévisualisation : `http://127.0.0.1:4399`. Les deux serveurs ne chargent **auc
 ## Modifier le contenu
 
 - `src/content/site.ts` : coordonnées, routes équivalentes, navigation, `childhoodPhoto` (vide volontairement).
-- `src/content/projects.ts` : trois produits, leurs textes FR/EN, captures, stacks et statuts.
+- `src/content/projects.ts` : les produits, leurs textes FR/EN, captures, stacks et statuts.
 - `src/content/about.ts` : parcours, compétences, influences et crédits Nintendo.
 - `src/content/peaks.ts` : sites clients.
 - `src/components/` : compositions des pages ; `src/styles/global.css` : tokens et règles partagées.
-- `src/components/HomePage.astro` et `src/scripts/home.ts` : accueil, console à trois projets, agrandissement FLIP, clavier et animations GSAP avec reduced-motion.
-- `src/content/project-inspector.ts` et `src/components/ProjectInspector.astro` : neuf vrais extraits de code, explications FR/EN et sources GitHub aux commits fixes.
+- `src/components/HomePage.astro` et `src/scripts/home.ts` : accueil, console de projets, agrandissement FLIP, clavier et animations GSAP avec reduced-motion.
+- `src/content/project-inspector.ts` et `src/components/ProjectInspector.astro` : extraits de code des projets, explications FR/EN et sources GitHub aux commits fixes.
 - `src/components/CanapeyPlayground.astro`, `src/scripts/canapey-playground.ts`, `src/lib/canapey-navigation.ts` : démonstration de navigation Canapey, sans lancement d’applications.
 - `src/components/HomeCommands.astro` et `src/scripts/commands.ts` : navigation rapide filtrable avec ⌘/Ctrl+K.
 - `src/scripts/peaks-motion.ts` : animations des projets clients, activées sur l’accueil uniquement.

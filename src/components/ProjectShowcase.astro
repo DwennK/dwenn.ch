@@ -1,5 +1,5 @@
 ---
-import { projects } from '../content/projects';
+import { projects, projectCount } from '../content/projects';
 import { type Lang, path } from '../content/site';
 interface Props { lang: Lang; full?: boolean }
 const { lang, full = false } = Astro.props;
@@ -7,11 +7,12 @@ const fr = lang === 'fr';
 const productType = {
   pos: fr ? 'APPLICATION WEB' : 'WEB APPLICATION',
   salaires: fr ? 'LOGICIEL DESKTOP / GRATUIT' : 'DESKTOP SOFTWARE / FREE',
+  glucose: fr ? 'LOGICIEL DESKTOP / GRATUIT' : 'DESKTOP SOFTWARE / FREE',
   canapey: fr ? 'PC DE SALON / EXPÉRIMENTAL' : 'LIVING-ROOM PC / EXPERIMENTAL',
 };
 ---
 <section class:list={['project-showcase', { 'is-full': full }]} id={full ? 'projects' : 'work'} aria-label={fr ? 'Mes logiciels' : 'My software'}>
-  {!full && <div class="showcase-heading"><span class="showcase-label">{fr ? 'SÉLECTION / 01—03' : 'SELECTED / 01—03'}</span><h2>{fr ? 'Ce que je développe.' : 'What I build.'}</h2></div>}
+  {!full && <div class="showcase-heading"><span class="showcase-label">{fr ? 'SÉLECTION' : 'SELECTED'} / 01—{projectCount}</span><h2>{fr ? 'Ce que je développe.' : 'What I build.'}</h2></div>}
   {projects.map(project => {
     const c = project[lang];
     return <article class={`project-feature project-feature--${project.key}`} id={`project-${project.key}`} aria-labelledby={`title-${project.key}`}>
@@ -23,7 +24,7 @@ const productType = {
         </div>
         <figure class="project-media">
           <a class="project-image-link" href={path(project.key, lang)} aria-label={`${fr ? 'Voir le projet' : 'View project'} ${project.name}`}>
-            <img src={project.image} alt={c.imageAlt} width="1440" height={project.key === 'salaires' ? '1165' : '900'} loading="lazy" decoding="async" />
+            <img src={project.image} alt={c.imageAlt} width={project.imageSize[0]} height={project.imageSize[1]} loading="lazy" decoding="async" />
             <span class="project-image-action" aria-hidden="true">↗</span>
           </a>
           <figcaption>{c.caption}</figcaption>
@@ -55,6 +56,7 @@ const productType = {
   .project-media{grid-column:3/-1;min-width:0}
   .project-image-link{display:block;position:relative;overflow:hidden;border:1px solid #ffffff18;background:#17191c}
   .project-image-link img{width:100%;height:auto;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+  .project-feature--glucose .project-image-link img{max-width:712px;margin-inline:auto}
   .project-image-link:hover img{transform:scale(1.015)}
   .project-image-action{position:absolute;bottom:20px;right:20px;display:flex;align-items:center;justify-content:center;width:50px;height:50px;background:#111214;color:#f1f1ee;border:1px solid #ffffff45;font-size:29px;transition:background .25s,color .25s}
   .project-image-link:hover .project-image-action{background:#f1f1ee;color:#111214}

@@ -1,6 +1,6 @@
 ---
 import { type Lang } from '../content/site';
-import { projects } from '../content/projects';
+import { projects, projectCount } from '../content/projects';
 import ProjectShowcase from './ProjectShowcase.astro';
 import Peaks from './Peaks.astro';
 interface Props { lang: Lang }
@@ -8,13 +8,13 @@ const { lang } = Astro.props;
 const fr = lang === 'fr';
 ---
 <section class:list={['work-intro', { 'work-intro--en': !fr }]} aria-labelledby="work-title">
-  <div class="work-intro__top"><span>{fr ? 'DÉVELOPPEMENT / SÉLECTION' : 'DEVELOPMENT / SELECTED WORK'}</span><span>01—03</span></div>
+  <div class="work-intro__top"><span>{fr ? 'DÉVELOPPEMENT / SÉLECTION' : 'DEVELOPMENT / SELECTED WORK'}</span><span>01—{projectCount}</span></div>
   <h1 id="work-title">{fr ? 'Projets.' : 'Selected work.'}</h1>
   <div class="work-intro__bottom">
-    <p>{fr ? 'Des logiciels que je conçois et développe de bout en bout : une application de gestion, un outil de paie et un launcher pour PC de salon.' : 'Software I design and build from end to end: a shop management app, a payroll tool and a launcher for living-room PCs.'}</p>
+    <p>{fr ? 'Des logiciels que je conçois et développe de bout en bout, de la gestion d’un magasin au suivi de la glycémie sur ordinateur.' : 'Software I design and build from end to end, from running a phone shop to following glucose readings on a computer.'}</p>
     <nav class="work-index" aria-label={fr ? 'Parcourir les projets' : 'Browse projects'}>
       {projects.map(project => <a href={`#project-${project.key}`}><span>{project.number}</span><span>{project.name}</span><span aria-hidden="true">↓</span></a>)}
-      <a href="#peaks"><span>04</span><span>{fr ? 'Les sites avec Peaks' : 'Websites with Peaks'}</span><span aria-hidden="true">↓</span></a>
+      <a href="#peaks"><span>{String(projects.length + 1).padStart(2, '0')}</span><span>{fr ? 'Les sites avec Peaks' : 'Websites with Peaks'}</span><span aria-hidden="true">↓</span></a>
     </nav>
   </div>
 </section>

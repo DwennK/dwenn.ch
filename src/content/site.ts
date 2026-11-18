@@ -1,5 +1,5 @@
 export type Lang = 'fr' | 'en';
-export type PageKey = 'home' | 'work' | 'about' | 'contact' | 'pos' | 'salaires' | 'canapey';
+export type PageKey = 'home' | 'work' | 'about' | 'contact' | 'pos' | 'salaires' | 'canapey' | 'glucose';
 export const routes: Record<PageKey, Record<Lang, string>> = {
   home: { fr: '/', en: '/en/' },
   work: { fr: '/realisations/', en: '/en/work/' },
@@ -8,6 +8,7 @@ export const routes: Record<PageKey, Record<Lang, string>> = {
   pos: { fr: '/realisations/pos-telephonie/', en: '/en/work/pos-telephonie/' },
   salaires: { fr: '/realisations/easy-salaires/', en: '/en/work/easy-salaires/' },
   canapey: { fr: '/realisations/canapey/', en: '/en/work/canapey/' },
+  glucose: { fr: '/realisations/easy-glucose/', en: '/en/work/easy-glucose/' },
 };
 export const path = (key: PageKey, lang: Lang) => routes[key][lang];
 export const profile = {

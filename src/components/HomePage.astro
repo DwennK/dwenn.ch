@@ -1,6 +1,6 @@
 ---
 import { type Lang, path, profile } from '../content/site';
-import { projects } from '../content/projects';
+import { projects, projectCount } from '../content/projects';
 import Peaks from './Peaks.astro';
 import ProjectInspector from './ProjectInspector.astro';
 import CanapeyPlayground from './CanapeyPlayground.astro';
@@ -8,7 +8,7 @@ import HomeCommands from './HomeCommands.astro';
 import {projectInspectors} from '../content/project-inspector';
 interface Props { lang:Lang }
 const {lang}=Astro.props; const fr=lang==='fr';
-const ordered=[projects[2],projects[0],projects[1]];
+const ordered = [...projects.filter(p => p.key === 'canapey'), ...projects.filter(p => p.key !== 'canapey')];
 const capabilities=fr?[
  {name:'Interfaces web',text:'Je dessine les écrans et je les développe. Du premier clic aux petits détails qui rendent un site agréable à utiliser.',tools:'Vue / Nuxt / Astro / GSAP'},
  {name:'API & données',text:'Ce qui se passe après le clic : les règles métier, les droits d’accès et les données à retrouver au bon endroit.',tools:'TypeScript / SQL / Cloudflare'},
@@ -18,7 +18,7 @@ const capabilities=fr?[
  {name:'APIs & data',text:'What happens after the click: business rules, access permissions and keeping data in the right place.',tools:'TypeScript / SQL / Cloudflare'},
  {name:'Desktop software',text:'Applications that run on your computer, with a web interface and Rust to work with the operating system.',tools:'Tauri / Rust / SQLite'}
 ];
-const descriptions={fr:{canapey:'Un lanceur Windows pour utiliser son PC depuis le canapé.',pos:'Une application pour gérer les ventes et les réparations d’un magasin.',salaires:'Un logiciel gratuit pour préparer les fiches de salaire en Suisse.'},en:{canapey:'A Windows launcher for using your PC from the sofa.',pos:'An application for managing a shop’s sales and repairs.',salaires:'Free desktop software for preparing Swiss payslips.'}};
+const descriptions={fr:{glucose:'Une application gratuite pour suivre sa glycémie sur Mac et Windows.',canapey:'Un lanceur Windows pour utiliser son PC depuis le canapé.',pos:'Une application pour gérer les ventes et les réparations d’un magasin.',salaires:'Un logiciel gratuit pour préparer les fiches de salaire en Suisse.'},en:{glucose:'A free app for following glucose readings on Mac and Windows.',canapey:'A Windows launcher for using your PC from the sofa.',pos:'An application for managing a shop’s sales and repairs.',salaires:'Free desktop software for preparing Swiss payslips.'}};
 ---
 <div class="developer-home">
   <section class="home-hero" aria-labelledby="home-title">
@@ -40,7 +40,7 @@ const descriptions={fr:{canapey:'Un lanceur Windows pour utiliser son PC depuis 
         {ordered.map((p,i)=><div class="console-panel" role="tabpanel" id={`panel-${p.key}`} aria-labelledby={`tab-${p.key}`} hidden={i!==0} data-project-panel={i}>
           <div class="console-toolbar"><span class="console-path">projects / {p.slug}</span><div class="console-modes" role="tablist" aria-label={fr?'Explorer ce projet':'Explore this project'}>{(p.key==='canapey'?['preview','code','play']:['preview','code']).map((mode,j)=><button type="button" role="tab" id={`mode-${p.key}-${mode}`} aria-controls={`view-${p.key}-${mode}`} aria-selected={j===0?'true':'false'} tabindex={j===0?0:-1} data-console-mode={mode}><span aria-hidden="true">{mode==='preview'?'◫':mode==='code'?'〈〉':'▷'}</span>{mode==='preview'?(fr?'Aperçu':'Preview'):mode==='code'?'Code':(fr?'Essayer':'Try it')}</button>)}</div></div>
           <div class="console-view" data-console-view="preview" id={`view-${p.key}-preview`} role="tabpanel" aria-labelledby={`mode-${p.key}-preview`}>
-            <a class="console-screen" href={path(p.key,lang)} aria-label={`${fr?'Découvrir':'Explore'} ${p.name}`}><img src={p.image} alt={p[lang].imageAlt} width="1440" height={p.key==='salaires'?1165:900} loading={i===0?'eager':'lazy'} fetchpriority={i===0?'high':'auto'} /><span class="screen-open" aria-hidden="true">↗</span></a>
+            <a class="console-screen" href={path(p.key,lang)} aria-label={`${fr?'Découvrir':'Explore'} ${p.name}`}><img src={p.image} alt={p[lang].imageAlt} width={p.imageSize[0]} height={p.imageSize[1]} loading={i===0?'eager':'lazy'} fetchpriority={i===0?'high':'auto'} /><span class="screen-open" aria-hidden="true">↗</span></a>
             <div class="console-architecture"><span class="architecture-heading">{fr?'Sous le capot':'Under the hood'}<span aria-hidden="true">↴</span></span><div>{projectInspectors[p.key].roles.map((role,index)=><button type="button" data-open-source={index} aria-label={`${fr?'Explorer':'Explore'} ${role.label[lang]}`}><span class="architecture-index">0{index+1}</span><span><b>{role.label[lang]}</b><small>{role.stack.slice(0,2).join(' / ')}</small></span><span class="architecture-arrow" aria-hidden="true">↗</span></button>)}</div></div>
           </div>
           <div class="console-view" data-console-view="code" id={`view-${p.key}-code`} role="tabpanel" aria-labelledby={`mode-${p.key}-code`} hidden><ProjectInspector lang={lang} project={p}/></div>
@@ -48,7 +48,7 @@ const descriptions={fr:{canapey:'Un lanceur Windows pour utiliser son PC depuis 
           <div class="console-info"><div><span class="eyebrow">{p.name}</span><p>{descriptions[lang][p.key]}</p></div><a href={path(p.key,lang)} class="console-case" aria-label={`${fr?'Voir le projet':'View project'} ${p.name}`}><span aria-hidden="true">↗</span></a></div>
           <div class="console-bottom"><span>{p.stack.slice(0,3).join(' / ')}</span><span>{p.key==='canapey'?(fr?'Projet expérimental':'Experimental project'):(fr?'Interface réelle · Données de démo':'Real interface · Demo data')}</span></div>
         </div>)}
-        <div class="console-counter" aria-hidden="true"><span data-project-count>01</span><span>/ 03</span></div>
+        <div class="console-counter" aria-hidden="true"><span data-project-count>01</span><span>/ {projectCount}</span></div>
       </div>
       <p class="workspace-hint"><span aria-hidden="true">↖</span>{fr?'Cliquez, explorez le code, essayez.':'Click, explore the code, try it out.'}</p>
       </div>
@@ -84,4 +84,8 @@ const descriptions={fr:{canapey:'Un lanceur Windows pour utiliser son PC depuis 
 
 @media(max-width:800px){.console-titlebar{height:42px;font-size:9px}.console-titlebar button{min-height:40px;font-size:9px}.console-tab{font-size:9px;min-height:44px}.console-toolbar{min-height:54px}.console-path{max-width:73px;font-size:7px}.console-modes button{font-size:9px;min-height:44px;padding-inline:6px}.console-architecture b{font-size:9px}.console-architecture small{font-size:7px}.workspace-expanded .console-tab{font-size:9px}.workspace-expanded .console-toolbar{min-height:54px}.workspace-expanded .console-modes button{font-size:9px;padding-inline:6px;min-height:44px}.workspace-expanded .console-path{font-size:7px}.workspace-expanded .console-architecture small{font-size:7px}}
 @media(max-width:360px){.console-tab,.workspace-expanded .console-tab{font-size:8px;padding-inline:6px}.console-architecture b{font-size:8px}.console-architecture small,.workspace-expanded .console-architecture small{font-size:6px}}
+  #panel-glucose .console-screen img{object-fit:contain;object-position:center}
+  @media(max-width:520px){
+    .console-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
 </style>

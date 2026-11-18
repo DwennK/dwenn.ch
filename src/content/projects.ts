@@ -1,6 +1,6 @@
 import type { Lang, PageKey } from './site';
 
-export type ProjectKey = Extract<PageKey, 'pos' | 'salaires' | 'canapey'>;
+export type ProjectKey = Extract<PageKey, 'pos' | 'salaires' | 'canapey' | 'glucose'>;
 
 export interface ProjectCopy {
   category: string;
@@ -25,6 +25,9 @@ export type Project = {
   number: string;
   image: string;
   image2: string;
+  imageSize: [number, number];
+  image2Size: [number, number];
+  download?: string;
   color: string;
   stack: string[];
   repo: string;
@@ -38,6 +41,8 @@ export const projects: Project[] = [
     number: '01',
     image: '/images/projects/pos-telephonie.webp',
     image2: '/images/projects/pos-telephonie-payment.webp',
+    imageSize: [1440, 900],
+    image2Size: [1440, 900],
     color: '#202226',
     stack: ['Nuxt', 'Vue', 'TypeScript', 'Drizzle', 'Turso / libSQL', 'Cloudflare Workers'],
     repo: 'https://github.com/DwennK/004-Nuxt',
@@ -87,6 +92,8 @@ export const projects: Project[] = [
     number: '02',
     image: '/images/projects/easy-salaires.webp',
     image2: '/images/projects/easy-salaires-monthly.webp',
+    imageSize: [1440, 1165],
+    image2Size: [1440, 1074],
     color: '#232528',
     stack: ['Tauri', 'Vue', 'TypeScript', 'Rust', 'SQLite'],
     repo: 'https://github.com/DwennK/Easy-Salaires',
@@ -136,6 +143,8 @@ export const projects: Project[] = [
     number: '03',
     image: '/images/projects/canapey.webp',
     image2: '/images/projects/canapey-ambience.webp',
+    imageSize: [1440, 900],
+    image2Size: [1440, 900],
     color: '#1c1e21',
     stack: ['Tauri', 'Rust', 'Vue', 'TypeScript'],
     repo: 'https://github.com/DwennK/canapey-launcher',
@@ -178,4 +187,58 @@ export const projects: Project[] = [
       image2Alt: 'Canapey: selecting the Spotify suggestion displays a green-toned turntable backdrop.',
     },
   },
+  {
+    key: 'glucose',
+    slug: 'easy-glucose',
+    name: 'Easy Glucose',
+    number: '04',
+    image: '/images/projects/easy-glucose.webp',
+    image2: '/images/projects/easy-glucose-widget.webp',
+    imageSize: [1424, 1364],
+    image2Size: [732, 572],
+    color: '#202327',
+    stack: ['Rust', 'egui'],
+    repo: 'https://github.com/DwennK/Easy-Glucose',
+    download: 'https://github.com/DwennK/Easy-Glucose/releases/latest',
+    fr: {
+      category: 'Application de bureau',
+      tagline: 'Une application gratuite pour suivre sa glycémie sur ordinateur.',
+      lead: 'J’ai développé Easy Glucose pour consulter sa glycémie sur Mac ou PC. Un petit widget affiche la dernière mesure et sa tendance pendant qu’on travaille.',
+      origin: 'Quand on est devant son ordinateur, on peut avoir envie de vérifier sa glycémie sans sortir son téléphone. Sur Mac, la valeur tient dans la barre des menus. Un clic suffit pour retrouver la courbe.',
+      challenge: 'Une valeur seule raconte peu de choses. L’application indique quand le capteur a pris la mesure et laisse un espace dans la courbe quand des données manquent.',
+      approach: 'J’ai écrit l’application en Rust et construit son interface avec egui. Le tableau de bord et le widget utilisent le même historique, conservé sur l’ordinateur pour chaque source.',
+      features: [
+        { title: 'Connexion au capteur', text: 'Easy Glucose récupère les mesures via Dexcom Share, LibreLinkUp ou Nightscout.' },
+        { title: 'Lecture de la courbe', text: 'On peut afficher 3, 6, 12 ou 24 heures et survoler un point pour retrouver la valeur et l’heure de la mesure.' },
+        { title: 'Mode démo', text: 'Des mesures fictives permettent d’essayer le tableau de bord et le widget avant de connecter un compte.' },
+      ],
+      detailTitle: 'La glycémie dans un coin de l’écran',
+      detailText: 'Le widget se déplace et garde sa position. On peut le laisser au-dessus des autres fenêtres pour voir la mesure, la flèche de tendance et la courbe.',
+      status: 'Gratuite et open source · macOS et Windows',
+      caption: 'Mode démo sur macOS, avec des mesures fictives.',
+      imageAlt: 'Tableau de bord Easy Glucose avec la dernière glycémie et douze heures de mesures simulées.',
+      image2Alt: 'Widget flottant Easy Glucose avec la valeur, la flèche de tendance et la courbe de glycémie.',
+    },
+    en: {
+      category: 'Desktop application',
+      tagline: 'A free app for following glucose readings on your computer.',
+      lead: 'I built Easy Glucose to bring glucose readings to Mac and Windows. A small widget shows the latest reading and trend while you work.',
+      origin: 'When you’re at your desk, it’s handy to check your glucose without reaching for your phone. On a Mac, the reading fits in the menu bar. One click opens the chart.',
+      challenge: 'A number alone tells you little. The app shows when the sensor took the reading and leaves a gap in the chart when readings are missing.',
+      approach: 'I wrote the app in Rust and built the interface with egui. The dashboard and widget share a reading history stored on the computer for each source.',
+      features: [
+        { title: 'Sensor connections', text: 'Easy Glucose retrieves readings through Dexcom Share, LibreLinkUp or Nightscout.' },
+        { title: 'Chart history', text: 'Choose 3, 6, 12 or 24 hours and hover over a point to see the value and time of that reading.' },
+        { title: 'Demo mode', text: 'Sample readings let you try the dashboard and widget before connecting an account.' },
+      ],
+      detailTitle: 'Glucose readings in the corner of your screen',
+      detailText: 'Drag the widget where you want it and it remembers its position. You can keep it above other windows to see the reading, trend arrow and chart.',
+      status: 'Free and open source · macOS and Windows',
+      caption: 'Demo mode on macOS with simulated readings.',
+      imageAlt: 'Easy Glucose dashboard showing the latest glucose reading and twelve hours of simulated readings.',
+      image2Alt: 'Floating Easy Glucose widget showing a reading, trend arrow and glucose chart.',
+    },
+  },
 ];
+
+export const projectCount = String(projects.length).padStart(2, '0');

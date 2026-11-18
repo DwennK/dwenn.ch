@@ -98,3 +98,7 @@ See [nintendo-sources.md](nintendo-sources.md) for original image URLs, official
 - `public/images/influences/donkey-kong-64.jpg`, 1600 × 800.
 
 Use as personal influences, never as Dwenn's own projects. Keep source links/credits accessible in the rendered About page. These are publisher art assets, not AI approximations. The future childhood photograph remains intentionally absent; no substitute was created.
+
+## Easy Glucose
+
+Les captures du [tableau de bord](https://github.com/DwennK/Easy-Glucose/blob/02ea0ecc009bb1d32b9ba32ca6d96c1a5708de5c/docs/images/dashboard.png) et du [widget](https://github.com/DwennK/Easy-Glucose/blob/02ea0ecc009bb1d32b9ba32ca6d96c1a5708de5c/docs/images/widget.png) proviennent du mode démo sur macOS. Elles sont converties en WebP à leurs dimensions d’origine.

@@ -352,5 +352,109 @@ export const projectInspectors: Record<ProjectKey, ProjectInspector> = {
         "code": "let existing = path.as_ref().and_then(|p| {\n    before.iter().find(|process| {\n        process.path.eq_ignore_ascii_case(p) && windows.iter().any(|w| w.process == process.key)\n    })\n});\nlet key = if let Some(p) = existing {\n    Some(p.key)\n} else {\n    platform::launch(&item)?\n};"
       }
     ]
+  },
+  "glucose": {
+    "key": "glucose",
+    "repo": "https://github.com/DwennK/Easy-Glucose",
+    "commit": "02ea0ecc009bb1d32b9ba32ca6d96c1a5708de5c",
+    "roles": [
+      {
+        "key": "interface",
+        "label": {
+          "fr": "Widget",
+          "en": "Widget"
+        },
+        "description": {
+          "fr": "Le widget prend la dernière mesure et l’affiche dans l’unité choisie.",
+          "en": "The widget takes the latest reading and displays it in the selected unit."
+        },
+        "stack": [
+          "egui",
+          "Rust"
+        ]
+      },
+      {
+        "key": "logic",
+        "label": {
+          "fr": "Tendance",
+          "en": "Trend"
+        },
+        "description": {
+          "fr": "Chaque tendance reconnue correspond à une flèche qui se lit à côté de la valeur.",
+          "en": "Each recognised trend maps to an arrow next to the reading."
+        },
+        "stack": [
+          "Rust"
+        ]
+      },
+      {
+        "key": "data",
+        "label": {
+          "fr": "Historique",
+          "en": "History"
+        },
+        "description": {
+          "fr": "Le fichier local associe les mesures à la source et à l’identité du compte.",
+          "en": "The local file ties readings to a source and account identity."
+        },
+        "stack": [
+          "Rust",
+          "Serde"
+        ]
+      }
+    ],
+    "excerpts": [
+      {
+        "key": "interface",
+        "label": {
+          "fr": "Afficher la dernière mesure",
+          "en": "Display the latest reading"
+        },
+        "description": {
+          "fr": "Le widget prend la dernière mesure et l’affiche dans l’unité choisie.",
+          "en": "The widget takes the latest reading and displays it in the selected unit."
+        },
+        "language": "rust",
+        "file": "src/ui/widget.rs",
+        "source": "https://github.com/DwennK/Easy-Glucose/blob/02ea0ecc009bb1d32b9ba32ca6d96c1a5708de5c/src/ui/widget.rs#L109-L118",
+        "code": "ui.label(\n    RichText::new(\n        app.snapshot\n            .readings\n            .last()\n            .map(|r| r.display(app.config.unit))\n            .unwrap_or(\"—\".into()),\n    )\n    .size(if compact { 39.0 } else { 54.0 }),\n);",
+        "startLine": 109,
+        "endLine": 118
+      },
+      {
+        "key": "logic",
+        "label": {
+          "fr": "Dessiner la flèche de tendance",
+          "en": "Choose the trend arrow"
+        },
+        "description": {
+          "fr": "Chaque tendance reconnue correspond à une flèche qui se lit à côté de la valeur.",
+          "en": "Each recognised trend maps to an arrow next to the reading."
+        },
+        "language": "rust",
+        "file": "src/core.rs",
+        "source": "https://github.com/DwennK/Easy-Glucose/blob/02ea0ecc009bb1d32b9ba32ca6d96c1a5708de5c/src/core.rs#L80-L91",
+        "code": "pub fn arrow(self) -> &'static str {\n    match self {\n        Self::DoubleUp => \"↑↑\",\n        Self::Up => \"↑\",\n        Self::SlightUp => \"↗\",\n        Self::Flat => \"→\",\n        Self::SlightDown => \"↘\",\n        Self::Down => \"↓\",\n        Self::DoubleDown => \"↓↓\",\n        _ => \"—\",\n    }\n}",
+        "startLine": 80,
+        "endLine": 91
+      },
+      {
+        "key": "data",
+        "label": {
+          "fr": "Conserver les mesures par source",
+          "en": "Store readings by source"
+        },
+        "description": {
+          "fr": "Le fichier local associe les mesures à la source et à l’identité du compte.",
+          "en": "The local file ties readings to a source and account identity."
+        },
+        "language": "rust",
+        "file": "src/storage.rs",
+        "source": "https://github.com/DwennK/Easy-Glucose/blob/02ea0ecc009bb1d32b9ba32ca6d96c1a5708de5c/src/storage.rs#L186-L193",
+        "code": "let file = format!(\"readings-{}.json\", credentials.provider().key());\natomic_json(\n    &self.directory.join(file),\n    &SourceCache {\n        identity: credentials.cache_identity(),\n        readings: readings.to_vec(),\n    },\n)",
+        "startLine": 186,
+        "endLine": 193
+      }
+    ]
   }
 };

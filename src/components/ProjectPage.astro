@@ -1,6 +1,6 @@
 ---
 import { path, type Lang } from '../content/site';
-import { projects, type Project } from '../content/projects';
+import { projects, projectCount, type Project } from '../content/projects';
 
 interface Props {
   lang: Lang;
@@ -11,13 +11,7 @@ const { lang, project } = Astro.props;
 const fr = lang === 'fr';
 const copy = project[lang];
 const next = projects[(projects.findIndex((item) => item.key === project.key) + 1) % projects.length]!;
-const nameParts = {
-  pos: ['POS', 'Téléphonie'],
-  salaires: ['Easy', 'Salaires'],
-  canapey: ['Canapey'],
-}[project.key];
-const imageHeight = project.key === 'salaires' ? 1165 : 900;
-const image2Height = project.key === 'salaires' ? 1074 : 900;
+const nameParts = project.name.split(' ');
 const expand = fr ? 'Agrandir la capture' : 'View full-size screenshot';
 const newTab = fr ? 'nouvel onglet' : 'new tab';
 const sections = [
@@ -31,7 +25,7 @@ const sections = [
   <header class="case-header">
     <div class="case-topline">
       <a class="case-back" href={path('work', lang)}><span aria-hidden="true">←</span>{fr ? 'Toutes les réalisations' : 'All projects'}</a>
-      <p class="case-label"><span>{project.number} / 03</span>{copy.category}</p>
+      <p class="case-label"><span>{project.number} / {projectCount}</span>{copy.category}</p>
     </div>
     <h1 class="case-name">{nameParts.map((part, index) => <>{index > 0 && ' '}<span>{part}</span></>)}</h1>
     <div class="case-introduction">
@@ -39,6 +33,7 @@ const sections = [
       <div class="case-summary">
         <p class="case-lead">{copy.lead}</p>
         <p class="case-status">{copy.status}</p>
+        {project.download && <a class="case-code-link" href={project.download}>{fr ? 'Télécharger' : 'Download'} {project.name}<span aria-hidden="true">↗</span></a>}
       </div>
     </div>
   </header>
@@ -49,7 +44,7 @@ const sections = [
       <a class="case-image-link" href={project.image} target="_blank" rel="noopener noreferrer" aria-label={`${expand} — ${project.name} (${newTab})`}>{expand}<span aria-hidden="true">↗</span></a>
     </div>
     <div class="case-matte">
-      <img src={project.image} width="1440" height={imageHeight} alt={copy.imageAlt} fetchpriority="high" decoding="async" />
+      <img src={project.image} width={project.imageSize[0]} height={project.imageSize[1]} alt={copy.imageAlt} fetchpriority="high" decoding="async" />
     </div>
     <figcaption>{copy.caption}</figcaption>
   </figure>
@@ -82,7 +77,7 @@ const sections = [
     </div>
     <figure>
       <div class="case-matte">
-        <img src={project.image2} width="1440" height={image2Height} alt={copy.image2Alt} loading="lazy" decoding="async" />
+        <img src={project.image2} width={project.image2Size[0]} height={project.image2Size[1]} alt={copy.image2Alt} loading="lazy" decoding="async" />
       </div>
       <figcaption><span>{project.name}</span><a class="case-image-link" href={project.image2} target="_blank" rel="noopener noreferrer" aria-label={`${expand} — ${fr ? 'deuxième vue' : 'second view'} (${newTab})`}>{expand}<span aria-hidden="true">↗</span></a></figcaption>
     </figure>
@@ -98,7 +93,7 @@ const sections = [
   </section>
 
   <nav class="case-next" aria-label={fr ? 'Autres projets' : 'More projects'}>
-    <div class="case-next-top"><span class="case-label">{fr ? 'Projet suivant' : 'Next project'} — {next.number} / 03</span><a class="case-back" href={path('work', lang)}>{fr ? 'Toutes les réalisations' : 'All projects'}<span aria-hidden="true">↗</span></a></div>
+    <div class="case-next-top"><span class="case-label">{fr ? 'Projet suivant' : 'Next project'} — {next.number} / {projectCount}</span><a class="case-back" href={path('work', lang)}>{fr ? 'Toutes les réalisations' : 'All projects'}<span aria-hidden="true">↗</span></a></div>
     <a class="case-next-link" href={path(next.key, lang)}><span class="case-next-name">{next.name}</span><span class="case-next-arrow" aria-hidden="true">↗</span></a>
     <div class="case-next-bottom"><p>{next[lang].tagline}</p><a class="case-code-link case-contact-link" href={path('contact', lang)}>{fr ? 'Parler d’un projet' : 'Discuss a project'}<span aria-hidden="true">↗</span></a></div>
   </nav>
@@ -126,6 +121,8 @@ const sections = [
   .case-image-link:hover span,.case-code-link:hover span{transform:translate(2px,-2px)}
   .case-matte{background:var(--project-color);padding:clamp(14px,2.5vw,40px)}
   .case-matte img{display:block;width:100%;height:auto}
+  .case--glucose .case-matte img{max-width:712px;margin-inline:auto}
+  .case--glucose .case-detail img{max-width:366px}
   .case-main-image>figcaption{padding-top:15px;font-size:11px;line-height:1.6;color:var(--muted)}
   .case-overview{padding-top:var(--case-space)}
   .case-overview-row{display:grid;grid-template-columns:1fr 1.35fr;gap:7vw;padding:31px 0 35px;border-top:1px solid var(--line)}

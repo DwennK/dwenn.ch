@@ -3,7 +3,7 @@ import {writeFile} from 'node:fs/promises';
 const browser=await chromium.launch({channel:'chrome',headless:true});
 const result=[];
 try{
- const routes=['/','/en/','/realisations/','/en/work/','/a-propos/','/en/about/','/contact/','/en/contact/','/realisations/pos-telephonie/','/en/work/pos-telephonie/','/realisations/easy-salaires/','/en/work/easy-salaires/','/realisations/canapey/','/en/work/canapey/'];
+ const routes=['/','/en/','/realisations/','/en/work/','/a-propos/','/en/about/','/contact/','/en/contact/','/realisations/pos-telephonie/','/en/work/pos-telephonie/','/realisations/easy-salaires/','/en/work/easy-salaires/','/realisations/canapey/','/en/work/canapey/','/realisations/easy-glucose/','/en/work/easy-glucose/'];
  for(const [width,height] of [[390,844],[320,740],[768,1024],[1265,714]]){
   const context=await browser.newContext({viewport:{width,height}});const p=await context.newPage();
   for(const route of routes){

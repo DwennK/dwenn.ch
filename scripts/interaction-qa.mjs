@@ -14,7 +14,7 @@ for(const [name,width,height,reducedMotion] of [['desktop',1440,900,'no-preferen
   await page.screenshot({path:`${out}/${name}-${lang}-hero.png`});
   assert.equal(await page.locator('h1').getAttribute('aria-label'),'Full stack.');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
-  for(const key of ['canapey','pos','salaires']){
+  for(const key of ['canapey','pos','salaires','glucose']){
    await page.locator(`#tab-${key}`).click();
    const panel=page.locator(`#panel-${key}`);
    await panel.locator('[data-console-mode="code"]').click();

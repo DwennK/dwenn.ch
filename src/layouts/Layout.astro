@@ -3,8 +3,8 @@ import '../styles/global.css';
 import '@fontsource-variable/archivo';
 
 import { type Lang, type PageKey, path, ui, profile } from '../content/site';
-interface Props { lang: Lang; page: PageKey; title: string; description: string; noFooter?: boolean }
-const { lang, page, title, description, noFooter = false } = Astro.props;
+interface Props { lang: Lang; page: PageKey; title: string; description: string; image?: string; noFooter?: boolean }
+const { lang, page, title, description, image = '/images/projects/canapey.webp', noFooter = false } = Astro.props;
 const t = ui[lang];
 const opposite = lang === 'fr' ? 'en' : 'fr';
 const canonical = new URL(path(page, lang), Astro.site);
@@ -28,7 +28,7 @@ const canonical = new URL(path(page, lang), Astro.site);
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
   <meta property="og:locale" content={lang === 'fr' ? 'fr_CH' : 'en_GB'} />
-  <meta property="og:image" content={new URL('/images/projects/canapey.webp', Astro.site)} />
+  <meta property="og:image" content={new URL(image, Astro.site)} />
   <meta name="twitter:card" content="summary_large_image" />
   <script type="application/ld+json" set:html={JSON.stringify({ '@context':'https://schema.org', '@type':'Person', name:profile.name, url:'https://dwenn.ch', jobTitle:t.role, email:profile.email, sameAs:[profile.github,profile.linkedin], address:{'@type':'PostalAddress',addressLocality:'Neuchâtel',addressCountry:'CH'} })} />
 </head>

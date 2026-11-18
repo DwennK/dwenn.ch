@@ -5,7 +5,7 @@ await mkdir('output/qa/rebuild',{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});
 process.on('SIGINT',async()=>{await browser.close();process.exit(130);});
 const result={pages:[],interactions:[],links:[],failures:[]};
-const routes=['/','/en/','/realisations/','/en/work/','/a-propos/','/en/about/','/contact/','/en/contact/','/realisations/pos-telephonie/','/en/work/pos-telephonie/','/realisations/easy-salaires/','/en/work/easy-salaires/','/realisations/canapey/','/en/work/canapey/'];
+const routes=['/','/en/','/realisations/','/en/work/','/a-propos/','/en/about/','/contact/','/en/contact/','/realisations/pos-telephonie/','/en/work/pos-telephonie/','/realisations/easy-salaires/','/en/work/easy-salaires/','/realisations/canapey/','/en/work/canapey/','/realisations/easy-glucose/','/en/work/easy-glucose/'];
 const links=new Set();
 try{
 for(const [name,width,height] of [['desktop',1440,900],['mobile',390,844]]){
@@ -26,7 +26,7 @@ for(const [name,width,height] of [['desktop',1440,900],['mobile',390,844]]){
   page.removeListener('pageerror',handler);
  }
  await page.goto(base+'/');await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(1400);
- for(const index of [1,2,0]){
+ for(const index of [1,2,3,0]){
   const tab=page.locator(`[data-project-tab="${index}"]`);if(name==='mobile')await tab.tap();else await tab.click();await page.waitForTimeout(400);
   const state=await page.evaluate(()=>({selected:[...document.querySelectorAll('[data-project-tab]')].filter(t=>t.getAttribute('aria-selected')==='true').map(t=>t.id),visible:[...document.querySelectorAll('[data-project-panel]')].filter(p=>!p.hidden).map(p=>p.id),counter:document.querySelector('[data-project-count]')?.textContent}));
   result.interactions.push({name,index,...state});if(state.visible.length!==1||state.selected.length!==1||state.counter!==String(index+1).padStart(2,'0'))result.failures.push({tabState:state});
@@ -34,7 +34,7 @@ for(const [name,width,height] of [['desktop',1440,900],['mobile',390,844]]){
  }
  await page.locator('[data-project-tab="0"]').focus();await page.keyboard.press('ArrowRight');await page.keyboard.press('End');
  const endFocus=await page.evaluate(()=>document.activeElement.id);await page.keyboard.press('Home');const homeFocus=await page.evaluate(()=>document.activeElement.id);
- result.interactions.push({name,keyboardEnd:endFocus,keyboardHome:homeFocus});if(endFocus!=='tab-salaires'||homeFocus!=='tab-canapey')result.failures.push({name,endFocus,homeFocus});
+ result.interactions.push({name,keyboardEnd:endFocus,keyboardHome:homeFocus});if(endFocus!=='tab-glucose'||homeFocus!=='tab-canapey')result.failures.push({name,endFocus,homeFocus});
  // Check scroll reversal and real input across sections without a scroll lock.
  await page.mouse.wheel(0,5000);await page.waitForTimeout(700);await page.mouse.wheel(0,-8000);await page.waitForTimeout(900);
  const scrollState=await page.evaluate(()=>({y:scrollY,overflow:document.documentElement.scrollWidth>innerWidth,titleOpacity:getComputedStyle(document.querySelector('h1')).opacity}));result.interactions.push({name,scrollState});if(scrollState.y!==0||scrollState.overflow||+scrollState.titleOpacity<.95)result.failures.push({name,scrollState});
